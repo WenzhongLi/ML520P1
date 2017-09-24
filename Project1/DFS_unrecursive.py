@@ -132,6 +132,7 @@ if __name__ == "__main__":
     start.print_matrix()
     start.paint_random()
     start.print_matrix()
+    print ('start over')
     dfs = DFS()
     m = [[0, 0, 0, 0, 1, 0],
          [0, 1, 0, 0, 1, 1],
@@ -141,4 +142,4 @@ if __name__ == "__main__":
          [0, 0, 0, 0, 0, 0]]
     dfs.dfs_route(start.get_matrix(), size)
     # dfs.dfs_route(m, size)
-    print ('start over')
+    print ('end')
