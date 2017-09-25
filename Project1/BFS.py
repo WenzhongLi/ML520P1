@@ -59,13 +59,11 @@ class BFS(object):
                         #    print "--"
                             # print path
                         target = end_node
+
                         while (target != start_node):
                             print target
-                            for (k,v) in self.node_has_been.items():
-                                if k == target:
-                                    buf = self.node_has_been.get(k)
-                                    target = buf
-                                    break
+                            target = self.node_has_been.get(target)
+
                         print start_node
 
                         # print distance
@@ -83,7 +81,7 @@ if __name__ == "__main__":
     for i in range(1, len(sys.argv)):
         print "argument", i, sys.argv[i]
     # set the size and density of this matrix
-    size = 4
+    size = 400
     start = Start.Start(size, 0.2)
     start.print_matrix()
     start.paint_random()
