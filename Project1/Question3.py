@@ -8,7 +8,6 @@
 '''
 @author: li
 '''
-import copy
 import sys
 import Start
 
@@ -21,12 +20,6 @@ class DFS(object):
         self.size = -1
         self.min_distance = -1
         self.optimal_road = []
-        # self.density = density
-        # self.map_matrix = []
-        # for i in range(size):
-        #    self.map_matrix.append([])
-        #    for j in range(size):
-        #        self.map_matrix[i].append(0)
 
     # DFS遍历
     def dfs_route(self, map, size):
@@ -36,66 +29,73 @@ class DFS(object):
         self.node_has_been[(0, 0)] = 0
         self.size = size
         self.min_distance = size * size
-        self.optimal_road = []
         start_node = (0, 0)
         end_node = (size - 1, size - 1)
         node_stack = [start_node]
         tracert = dict()
-        tracert[(0, 0)] = [(0, 0)]
-
-        while (len(node_stack) > 0):
+        tracert[(0, 0)] = [None]
+        distance = dict()
+        distance[(0, 0)] = 0
+        while len(node_stack) > 0:
             # Get last node
             current_node = node_stack[len(node_stack) - 1]
             del node_stack[len(node_stack) - 1]
-            self.node_has_been[current_node] = len(tracert[current_node]) - 1
+            self.node_has_been[current_node] = distance[current_node]
             # discover this node
             # add nodes to the list end
             # 1 0
             target = (current_node[0] + 1, current_node[1])
-            if self.move_to_node(target, map, len(tracert[current_node]), size, node_stack):
+            if self.move_to_node(target, map, distance[current_node] + 1, size, node_stack):
                 if target == end_node:
-                    self.reach_end(end_node, tracert[current_node])
+                    self.reach_end(start_node, end_node, tracert, distance[current_node] + 1, current_node)
                     return 1
                 else:
                     node_stack.append(target)
-                    next_tracert = copy.deepcopy(tracert[current_node])
-                    next_tracert.append(target)
-                    tracert[target] = next_tracert
+                    tracert[target] = current_node
+                    distance[target] = distance[current_node] + 1
             # 0 1
             target = (current_node[0], current_node[1] + 1)
-            if self.move_to_node(target, map, len(tracert[current_node]), size, node_stack):
+            if self.move_to_node(target, map, distance[current_node] + 1, size, node_stack):
                 if target == end_node:
-                    self.reach_end(end_node, tracert[current_node])
+                    self.reach_end(start_node, end_node, tracert, distance[current_node] + 1, current_node)
                     return 1
                 else:
                     node_stack.append(target)
-                    next_tracert = copy.deepcopy(tracert[current_node])
-                    next_tracert.append(target)
-                    tracert[target] = next_tracert
+                    tracert[target] = current_node
+                    distance[target] = distance[current_node] + 1
             # -1 0
             target = (current_node[0] - 1, current_node[1])
-            if self.move_to_node(target, map, len(tracert[current_node]), size, node_stack):
+            if self.move_to_node(target, map, distance[current_node] + 1, size, node_stack):
                 if target == end_node:
-                    self.reach_end(end_node, tracert[current_node])
+                    self.reach_end(start_node, end_node, tracert, distance[current_node] + 1, current_node)
                     return 1
                 else:
                     node_stack.append(target)
-                    next_tracert = copy.deepcopy(tracert[current_node])
-                    next_tracert.append(target)
-                    tracert[target] = next_tracert
+                    tracert[target] = current_node
+                    distance[target] = distance[current_node] + 1
             # 0 -1
             target = (current_node[0], current_node[1] - 1)
-            if self.move_to_node(target, map, len(tracert[current_node]), size, node_stack):
+            if self.move_to_node(target, map, distance[current_node] + 1, size, node_stack):
                 if target == end_node:
-                    self.reach_end(end_node, tracert[current_node])
+                    self.reach_end(start_node, end_node, tracert, distance[current_node] + 1, current_node)
                     return 1
                 else:
                     node_stack.append(target)
-                    next_tracert = copy.deepcopy(tracert[current_node])
-                    next_tracert.append(target)
-                    tracert[target] = next_tracert
-
+                    tracert[target] = current_node
+                    distance[target] = distance[current_node] + 1
         return 0
+        # if self.optimal_road:
+        #     print "optimal_road",
+        #     print self.optimal_road
+        #     print "distance:",
+        #     print len(self.optimal_road)
+        #     result = copy.deepcopy(map)
+        #     for node in self.optimal_road:
+        #         result[node[0]][node[1]] = 2
+        #     for k in range(size):
+        #         for j in range(size):
+        #             print(result[k][j]),
+        #         print('\n'),
 
     def move_to_node(self, target, map, distance, size, node_stack):
         if (target not in self.node_has_been or self.node_has_been[target] > distance) \
@@ -107,13 +107,21 @@ class DFS(object):
         else:
             return 0
 
-    def reach_end(self, end_node, tracert):
-        # print tracert,
-        # print end_node
-        # if len(tracert) + 1 < self.min_distance:
-        #     self.min_distance = len(tracert) + 1  # + 1
-        #     self.optimal_road = copy.deepcopy(tracert)
-        #     self.optimal_road.append(end_node)
+    def reach_end(self, start_node, end_node, tracert, distance, current_node):
+        # if distance < self.min_distance:
+            # # print distance
+            # list = []
+            # list.append(end_node)
+            # while current_node != start_node:
+            #     list.append(current_node)
+            #     current_node = tracert[current_node]
+            # list.append(start_node)
+#
+            # # print list
+            # # print end_nod
+            # # if len(list) < self.min_distance:
+            # self.min_distance = len(list)
+            # self.optimal_road = list
         return
 
 
@@ -123,11 +131,11 @@ if __name__ == "__main__":
         print "argument", i, sys.argv[i]
     print ('start initialize')
     # set the size and density of this matrix
-    size = 30
+    size = 60
     start = Start.Start(size, 0.3)
-    start.print_matrix()
-    start.paint_random()
-    start.print_matrix()
+    #start.print_matrix()
+    #start.paint_random()
+    #start.print_matrix()
     print ('start over')
     dfs = DFS()
     m = [[0, 0, 0, 0, 1, 0],
@@ -136,7 +144,7 @@ if __name__ == "__main__":
          [1, 0, 0, 0, 1, 0],
          [0, 1, 0, 1, 0, 0],
          [0, 0, 0, 0, 0, 0]]
-    dfs.dfs_route(start.get_matrix(), size)
+    #dfs.dfs_route(start.get_matrix(), size)
 
     for i in range(0, 100):
         density = float(i)/100
@@ -144,12 +152,12 @@ if __name__ == "__main__":
         print density
         count = 0;
         start = Start.Start(size, density)
-        for t in range(0, 10):
+        for t in range(0, 100):
             start.paint_random()
             success = dfs.dfs_route(start.get_matrix(), size)
             if success == 1:
                 count += 1
         print "percentage: ",
-        print float(count)/10
+        print float(count)/100
     # dfs.dfs_route(m, size)
     print ('end')
