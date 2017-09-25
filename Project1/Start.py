@@ -33,7 +33,12 @@ class Start(object):
         for i in range(self.size):
             for j in range(self.size):
                 list.append((i, j))
-        slice = random.sample(list, int(self.size*self.size*self.density))
+        del list[self.size * self.size - 1]
+        del list[0]
+        dot_num = int(self.size * self.size * self.density)
+        if dot_num > self.size * self.size - 2:
+            dot_num = self.size * self.size - 2
+        slice = random.sample(list, dot_num)
         for node in slice:
             self.map_matrix[node[0]][node[1]] = 1
         # i=0
@@ -75,7 +80,7 @@ if __name__ == "__main__":
         print "argment", i, sys.argv[i]
     print ('start initialize')
     # set the size and density of this matrix
-    start = Start(10,0.3)
+    start = Start(100, 0.3)
     start.print_matrix()
     start.paint_random()
     start.print_matrix()
