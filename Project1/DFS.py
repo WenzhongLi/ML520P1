@@ -6,6 +6,7 @@
 import copy
 import sys
 import Start
+import time
 
 
 class DFS(object):
@@ -177,22 +178,29 @@ class DFS(object):
             print('\n'),
         return
 
+
 if __name__ == "__main__":
     print "script_name", sys.argv[0]
     for i in range(1, len(sys.argv)):
         print "argument", i, sys.argv[i]
     print ('start initialize')
     # set the size and density of this matrix
-    size = 500
+    size = 100
     start = Start.Start(size, 0.3)
-    start.print_matrix()
+    # start.print_matrix()
     start.paint_random()
-    start.print_matrix()
+    # start.print_matrix()
     dfs = DFS()
-    print dfs.dfs_route(start.get_matrix(), size)
-    if dfs.dfs_route(start.get_matrix(), size)[0] == 1:
-        # dfs.print_optimal(start.get_matrix())
+    print ('start run')
+    start_time = time.clock()
+    # print dfs.dfs_route(start.get_matrix(), size)
+    result = dfs.dfs_route(start.get_matrix(), size)
+    elapsed = (time.clock() - start_time)
+    print result
+    print("Time used:", elapsed)
+    if result[0] == 1:
+        dfs.print_optimal(start.get_matrix())
         print ('over')
     else:
         print "no available way"
-        print ('over')
+        print "over"
