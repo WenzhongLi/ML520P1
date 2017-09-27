@@ -134,7 +134,7 @@ class DFS(object):
     def reach_end(self, start_node, end_node, tracert, distance, current_node, map):
         if distance < self.min_distance:
             tracert[end_node] = current_node
-            print distance
+            # print distance
             list = []
             list.append(end_node)
             while current_node != start_node:
@@ -191,7 +191,8 @@ if __name__ == "__main__":
     dfs = DFS()
     print dfs.dfs_route(start.get_matrix(), size)
     if dfs.dfs_route(start.get_matrix(), size)[0] == 1:
-        dfs.print_optimal(start.get_matrix())
+        # dfs.print_optimal(start.get_matrix())
+        print ('over')
     else:
         print "no available way"
-    print ('start over')
+        print ('over')
