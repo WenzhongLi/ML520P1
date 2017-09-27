@@ -35,6 +35,7 @@ class BFS(object):
         self.node_has_been[start_node] = (-1, -1)
         map[start_node[0]][start_node[1]] = 1
         traversal_node_count = 1
+        fringe = -1
 
         deltaX = [0, 1, -1, 0]
         deltaY = [1, 0, 0, -1]
@@ -43,6 +44,8 @@ class BFS(object):
         while not q.empty():
             distance_traveled += 1
             currentQSize = q.qsize()
+            if fringe < currentQSize:
+                fringe = currentQSize
             for i in range(0, currentQSize):
                 currentNode = q.get()
                 for j in range(0, 4):
@@ -82,8 +85,11 @@ class BFS(object):
                         traversal_path.reverse()
                         print traversal_path
 
-                        # return (路徑, distance, 經歷過的所有點)
-                        return traversal_path, distance_traveled, traversal_node_count
+                        print "fringe:"
+                        print fringe
+
+                        # return (路徑, distance, 經歷過的所有點, fringe)
+                        return 1, traversal_path, distance_traveled, traversal_node_count, fringe
 
                     if not map[neighborNode[0]][neighborNode[1]]:
                         self.node_has_been[neighborNode] = currentNode
@@ -91,6 +97,7 @@ class BFS(object):
                         traversal_node_count += 1
                         q.put(neighborNode)
         print "not distance"
+        return 0
 
 if __name__ == "__main__":
     print "script_name", sys.argv[0]
@@ -98,7 +105,7 @@ if __name__ == "__main__":
         print "argument", i, sys.argv[i]
     # set the size and density of this matrix
     size = 3
-    start = Start.Start(size, 0.0)
+    start = Start.Start(size, 0.4)
     start.print_matrix()
     start.paint_random()
     start.print_matrix()
