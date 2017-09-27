@@ -29,6 +29,7 @@ class Start(object):
     # 随机绘制迷宫
 
     def paint_random(self):
+        matrix = [[0 for j in range(self.size)] for k in range(self.size)]
         list = []
         for i in range(self.size):
             for j in range(self.size):
@@ -40,7 +41,9 @@ class Start(object):
             dot_num = self.size * self.size - 2
         slice = random.sample(list, dot_num)
         for node in slice:
-            self.map_matrix[node[0]][node[1]] = 1
+            matrix[node[0]][node[1]] = 1
+        self.map_matrix = matrix
+        return matrix
         # i=0
         # total_num = self.size*self.size - 2
         # block_num = int(self.size*self.size*self.density)
