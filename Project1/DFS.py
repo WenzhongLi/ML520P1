@@ -97,29 +97,29 @@ class DFS(object):
                     node_stack_map[target] = 1
                     tracert[target] = current_node
                     distance[target] = current_distance + 1
-
-        if self.min_distance < size * size:
-            list = []
-            current_node = end_node
-            while current_node != start_node:
-                list.append(current_node)
-                current_node = tracert[current_node]
-            list.append(start_node)
-            self.optimal_road = list
-            print "optimal_road",
-            print self.optimal_road
-            print "distance:",
-            print len(self.optimal_road)
-            result = copy.deepcopy(map)
-            for node in self.optimal_road:
-                result[node[0]][node[1]] = 2
-            for k in range(size):
-                for j in range(size):
-                    if result[k][j] == 2:
-                        print "\033[1;35m2\033[0m",
-                    else:
-                        print(result[k][j]),
-                print('\n'),
+        return 0, None
+        # if self.min_distance < size * size:
+        #     list = []
+        #     current_node = end_node
+        #     while current_node != start_node:
+        #         list.append(current_node)
+        #         current_node = tracert[current_node]
+        #     list.append(start_node)
+        #     self.optimal_road = list
+        #     print "optimal_road",
+        #     print self.optimal_road
+        #     print "distance:",
+        #     print len(self.optimal_road)
+        #     result = copy.deepcopy(map)
+        #     for node in self.optimal_road:
+        #         result[node[0]][node[1]] = 2
+        #     for k in range(size):
+        #         for j in range(size):
+        #             if result[k][j] == 2:
+        #                 print "\033[1;35m2\033[0m",
+        #             else:
+        #                 print(result[k][j]),
+        #         print('\n'),
 
     def move_to_node(self, target, map, distance, size, node_stack):
         if 0 <= target[0] < size \
@@ -141,23 +141,41 @@ class DFS(object):
                 list.append(current_node)
                 current_node = tracert[current_node]
             list.append(start_node)
-            result = copy.deepcopy(map)
-            for node in list:
-                result[node[0]][node[1]] = 2
-            for k in range(self.size):
-                for j in range(self.size):
-                    if result[k][j] == 2:
-                        print "\033[1;35m2\033[0m",
-                    else:
-                        print(result[k][j]),
-                print('\n'),
+            self.optimal_road = list
+            # return list
+            # result = copy.deepcopy(map)
+            # for node in list:
+            #     result[node[0]][node[1]] = 2
+            # for k in range(self.size):
+            #     for j in range(self.size):
+            #         if result[k][j] == 2:
+            #             print "\033[1;35m2\033[0m",
+            #         else:
+            #             print(result[k][j]),
+            #     print('\n'),
             # print list
             # print end_node
             # if len(list) < self.min_distance:
-            self.min_distance = distance  # len(list)
+            # self.min_distance = distance  # len(list)
             # self.optimal_road = list
         return
-
+    def print_optimal(self, map):
+        print "optimal_road",
+        print self.optimal_road
+        print "distance:",
+        print len(self.optimal_road)
+        list = self.optimal_road
+        result = copy.deepcopy(map)
+        for node in list:
+            result[node[0]][node[1]] = 2
+        for k in range(self.size):
+            for j in range(self.size):
+                if result[k][j] == 2:
+                    print "\033[1;35m2\033[0m",
+                else:
+                    print(result[k][j]),
+            print('\n'),
+        return
 
 if __name__ == "__main__":
     print "script_name", sys.argv[0]
@@ -165,11 +183,15 @@ if __name__ == "__main__":
         print "argument", i, sys.argv[i]
     print ('start initialize')
     # set the size and density of this matrix
-    size = 1000
+    size = 500
     start = Start.Start(size, 0.3)
     start.print_matrix()
     start.paint_random()
     start.print_matrix()
     dfs = DFS()
     print dfs.dfs_route(start.get_matrix(), size)
+    if dfs.dfs_route(start.get_matrix(), size)[0] == 1:
+        dfs.print_optimal(start.get_matrix())
+    else:
+        print "no available way"
     print ('start over')
