@@ -34,6 +34,7 @@ class BFS(object):
         q.put(start_node)
         self.node_has_been[start_node] = (-1, -1)
         map[start_node[0]][start_node[1]] = 1
+        traversal_node_count = 1
 
         deltaX = [0, 1, -1, 0]
         deltaY = [1, 0, 0, -1]
@@ -58,21 +59,36 @@ class BFS(object):
                         #    print v
                         #    print "--"
                             # print path
+                        traversal_path = []
                         target = end_node
 
                         while (target != start_node):
-                            print target
+                            traversal_path.append(target)
+                            #print target
                             target = self.node_has_been.get(target)
 
-                        print start_node
+                        traversal_path.append(start_node)
+                        #print start_node
 
                         # print distance
                         print "distance:"
                         print distance_traveled
-                        return
+
+
+                        print "traversal_node_count:"
+                        print traversal_node_count
+
+                        print "path:"
+                        traversal_path.reverse()
+                        print traversal_path
+
+                        # return (路徑, distance, 經歷過的所有點)
+                        return traversal_path, distance_traveled, traversal_node_count
+
                     if not map[neighborNode[0]][neighborNode[1]]:
                         self.node_has_been[neighborNode] = currentNode
                         map[neighborNode[0]][neighborNode[1]] = 1
+                        traversal_node_count += 1
                         q.put(neighborNode)
         print "not distance"
 
@@ -81,8 +97,8 @@ if __name__ == "__main__":
     for i in range(1, len(sys.argv)):
         print "argument", i, sys.argv[i]
     # set the size and density of this matrix
-    size = 400
-    start = Start.Start(size, 0.2)
+    size = 3
+    start = Start.Start(size, 0.0)
     start.print_matrix()
     start.paint_random()
     start.print_matrix()
