@@ -27,7 +27,7 @@ class BFS(object):
         self.size = size
         start_node = (0, 0)
         end_node = (size - 1, size - 1)
-        self.bfs(map, start_node, end_node)
+        return self.bfs(map, start_node, end_node)
 
     def bfs(self, map, start_node, end_node):
         q = Queue.Queue()
@@ -72,21 +72,7 @@ class BFS(object):
 
                         traversal_path.append(start_node)
                         #print start_node
-
                         # print distance
-                        print "distance:"
-                        print distance_traveled
-
-
-                        print "traversal_node_count:"
-                        print traversal_node_count
-
-                        print "path:"
-                        traversal_path.reverse()
-                        print traversal_path
-
-                        print "fringe:"
-                        print fringe
 
                         # return (路徑, distance, 經歷過的所有點, fringe)
                         return 1, traversal_path, distance_traveled, traversal_node_count, fringe
@@ -96,18 +82,33 @@ class BFS(object):
                         map[neighborNode[0]][neighborNode[1]] = 1
                         traversal_node_count += 1
                         q.put(neighborNode)
-        print "not distance"
-        return 0
+        #print "not distance"
+        return 0, None
 
 if __name__ == "__main__":
     print "script_name", sys.argv[0]
     for i in range(1, len(sys.argv)):
         print "argument", i, sys.argv[i]
     # set the size and density of this matrix
-    size = 3
-    start = Start.Start(size, 0.4)
+    size = 100
+    start = Start.Start(size, 0.0)
     start.print_matrix()
     start.paint_random()
     start.print_matrix()
     bfs = BFS()
     bfs.bfs_init(start.get_matrix(), size)
+    '''
+    # print distance
+    print "distance:"
+    print distance_traveled
+
+    print "traversal_node_count:"
+    print traversal_node_count
+
+    print "path:"
+    traversal_path.reverse()
+    print traversal_path
+
+    print "fringe:"
+    print fringe
+    '''
