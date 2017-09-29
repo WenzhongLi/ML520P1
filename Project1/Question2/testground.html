@@ -45,6 +45,8 @@
             background:rgb(255,234,00);
         }*/
         </style>
+        <script src="jquery-1.12.4/jquery.min.js"></script>
+        <script src="JSON-js-master/json2.js"></script>
         <script type="text/javascript">
         window.onload = function(){
             var clos,rows,tab;
@@ -52,6 +54,9 @@
             var btn1 = document.getElementById("t3");
             var box = document.getElementById("box");
             btn1.onclick = function(){
+                $.get('data.json').done(function(data){
+                    alert(JSON.stringify(data));
+                });
                  clos = t1.value;
                  rows = t2.value;
                  tab = document.createElement("table");
@@ -59,7 +64,7 @@
                 for(var i = 0 ;i < clos ; i++){
                     var tr = document.createElement("tr");
                     for(var j = 0; j < rows ; j++){
-                             R = Math.floor(Math.random()*255);
+                        R = Math.floor(Math.random()*255);
                          G = Math.floor(Math.random()*255);
                          B = Math.floor(Math.random()*255);
                         var td = document.createElement("td");
