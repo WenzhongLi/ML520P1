@@ -47,23 +47,22 @@ class ASTAR:
                 traversal_node_count += 1
                 openSize = self.extend_round(p)
 
-
-
                 if not self.open:
-                    return
+                    print 0, None
+                    return 0, None
 
                 idx, p = self.get_best()
 
                 if self.is_target(p):
                     self.make_path(p)
-                    print "path:"
-                    print self.path
-                    print "distance:"
-                    print p.distance
-                    print "node_been_searched:"
-                    print traversal_node_count
-                    print "fridge:"
-                    print openSize
+                    # print "path:"
+                    # print self.path
+                    # print "distance:"
+                    # print p.distance
+                    # print "node_been_searched:"
+                    # print traversal_node_count
+                    # print "fridge:"
+                    # print openSize
                     # return 1, path, total_distance, node_has_searched, fridge
                     return 1, self.path, p.distance, traversal_node_count, openSize
 
@@ -160,7 +159,7 @@ if __name__ == "__main__":
         print "argument", i, sys.argv[i]
     # set the size and density of this matrix
     size = 10
-    start = Start.Start(size, 0.2)
+    start = Start.Start(size, 1)
     start.print_matrix()
     start.paint_random()
     start.print_matrix()

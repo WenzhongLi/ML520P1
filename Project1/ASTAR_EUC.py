@@ -57,14 +57,14 @@ class ASTAR:
 
                 if self.is_target(p):
                     self.make_path(p)
-                    print "path:"
-                    print self.path
-                    print "distance:"
-                    print p.distance
-                    print "node_been_searched:"
-                    print traversal_node_count
-                    print "fridge:"
-                    print openSize
+                    # print "path:"
+                    # print self.path
+                    # print "distance:"
+                    # print p.distance
+                    # print "node_been_searched:"
+                    # print traversal_node_count
+                    # print "fridge:"
+                    # print openSize
                     # return 1, path, total_distance, node_has_searched, fridge
                     return 1, self.path, p.distance, traversal_node_count, openSize
 
