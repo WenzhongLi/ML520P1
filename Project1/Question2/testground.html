@@ -56,31 +56,43 @@
             btn1.onclick = function(){
                 $.get('data.json').done(function(data){
                     alert(JSON.stringify(data));
-                });
-                 clos = t1.value;
-                 rows = t2.value;
-                 tab = document.createElement("table");
-                 tab.id = 'centre_table';
-                for(var i = 0 ;i < clos ; i++){
-                    var tr = document.createElement("tr");
-                    for(var j = 0; j < rows ; j++){
-                        R = Math.floor(Math.random()*255);
-                         G = Math.floor(Math.random()*255);
-                         B = Math.floor(Math.random()*255);
-                        var td = document.createElement("td");
-                        td.style.cssText = "width:50px;text-align:center; height:50px; border:solid 1px #FF0000;background:rgb("+ R +"," + G +"," + B +")";
-                        td.innerHTML = Math.floor(Math.random()*clos*rows);
-                        tr.appendChild(td);
+                    clos = data.original.size;
+                    map_to_paint = data.original.map;
+                    rows = clos;
+                    tab = document.createElement("table");
+                    tab.id = 'centre_table';
+                    for(var i = 0 ;i < clos ; i++){
+                        var tr = document.createElement("tr");
+                        for(var j = 0; j < rows ; j++){
+                            if (map_to_paint[i][j] == 0){
+                                R = 255;
+                                G = 255;
+                                B = 255;
+                            }else if (map_to_paint[i][j] == 1){
+                                R = 0;
+                                G = 0;
+                                B = 0;
+                            }else if (map_to_paint[i][j] == 2){
+                                R = 255;
+                                G = 0;
+                                B = 0;
+                            }
+                            var td = document.createElement("td");
+                            td.style.cssText = "width:50px;text-align:center; height:50px; border:solid 1px #FF0000;background:rgb("+ R +"," + G +"," + B +")";
+                            //td.innerHTML = Math.floor(Math.random()*clos*rows);
+                            tr.appendChild(td);
+                        }
+                        tab.appendChild(tr);
                     }
-                    tab.appendChild(tr);
-                }
-                var table_old = document.getElementById("centre_table");
-                if (table_old != null){
-                    box.removeChild(table_old);
-                    box.appendChild(tab);
-                }else{
-                    box.appendChild(tab);
-                }
+                    var table_old = document.getElementById("centre_table");
+                    if (table_old != null){
+                        box.removeChild(table_old);
+                        box.appendChild(tab);
+                    }else{
+                        box.appendChild(tab);
+                    }
+                });
+
 
             }
 
