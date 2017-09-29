@@ -17,15 +17,36 @@ if __name__ == "__main__":
     for i in range(1, len(sys.argv)):
         print "argument", i, sys.argv[i]
     print ('start initialize')
-
+    dfs = DFS.DFS()
     size = 10
     start = Start.Start(size, 0.3)
     start.paint_random()
     start.print_matrix()
+    # test map
+    while dfs.dfs_route(start.get_matrix(), size)[0] == 0:
+        start = Start.Start(size, 0.3)
+        start.paint_random()
     map = copy.copy(start.get_matrix())
     data = dict()
     original = {"size": size, "map": map}#[[1,1,1],[1,1,1],[1,1,1]]}
     data["original"] = original
+    # DFS
+
+    result = dfs.dfs_route(start.get_matrix(), size)
+    route = dfs.print_optimal(copy.deepcopy(map))
+    # print result
+    data["DFS"] = {"size": size, "map": route}
+    # BFS
+    bfs = BFS.BFS()
+    result = bfs.bfs_init(start.get_matrix(), size)
+    route = copy.deepcopy(map)
+    for node in result[1]:
+
+    print result
+    # A-MHT
+    # A-Eud
+
+
     json = json.dumps(data)
     print json
 
