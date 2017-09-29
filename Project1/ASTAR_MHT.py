@@ -1,87 +1,144 @@
 # coding : utf-8
-#author : GE
+# author : GE
 
 import sys
 import Start
-import Queue
+
+class Node :
+    def __init__(self, parent, x, y, distance):
+        self.parent = parent
+        self.x = x
+        self.y = y
+        self.distance = distance
+
+class ASTAR:
+        def __init__(self, map, start_node, end_node):
+            self.s_x = start_node[0]
+            self.s_y = start_node[1]
+            self.e_x = end_node[0]
+            self.e_y = end_node[1]
+
+            self.map = map
+            self.w = len(map)
+            self.h = len(map)
+
+            self.open = []
+            self.close = []
+            self.path = []
+
+        def find_path(self):
+            p = Node(None, self.s_x, self.s_y, 0.0)
+            traversal_node_count = 0
+
+            while True:
+                traversal_node_count += 1
+                openSize = self.extend_round(p)
 
 
-class ComparableObj(object):
-    def __init__(self, distance_traveled, ManhattanDis, node):
-        self.distance_traveled = distance_traveled
-        self.ManhattanDis = ManhattanDis
-        self.node = node
 
-    def __cmp__(self, other):
-        return cmp(self.distance_traveled + self.ManhattanDis, other.distance_traveled + other.ManhattanDis)
+                if not self.open:
+                    return
 
+                idx, p = self.get_best()
 
-class ASTAR(object):
-    def __init__(self):
-        self.node_to_go = {}
-        self.node_has_been = dict()
-        self.size = -1
-        self.node_to_poo = {}
+                if self.is_target(p):
+                    self.make_path(p)
+                    print "path:"
+                    print self.path
+                    print "distance:"
+                    print p.distance
+                    print "node_been_searched:"
+                    print traversal_node_count
+                    print "fridge:"
+                    print openSize
+                    # return 1, path, total_distance, node_has_searched, fridge
+                    return 1, self.path, p.distance, traversal_node_count, openSize
 
-    # ASTAR
-    def astar_init(self, map, size):
-        # start point
-        self.node_to_go = {}
-        self.node_has_been = dict()
-        self.size = size
-        start_node = (0, 0)
-        end_node = (size - 1, size - 1)
-        self.astar(map, start_node, end_node)
-
-    def astar(self, map, start_node, end_node):
-        q = Queue.PriorityQueue()
-        q.put(ComparableObj(0, end_node[0] + end_node[1] - start_node[0] - start_node[1], start_node))
-        self.node_has_been[start_node] = (-1, -1)
-        map[start_node[0]][start_node[1]] = 1
-        deltaX = [0, 1, -1, 0]
-        deltaY = [1, 0, 0, -1]
-    
-        distance_traveled = 0
-        optimial_distance = 0
-        while not q.empty():
-            distance_traveled += 1
-            currentQSize = q.qsize()
-            for i in range(0, currentQSize):
-                currentObj = q.get()
-                currentNode = currentObj.node
-                for j in range(0, 4):
-                    neighborNode = (currentNode[0] + deltaX[j], currentNode[1] + deltaY[j])
-
-                    if neighborNode[0] < 0 or neighborNode[1] < 0 or neighborNode[1] \
-                            >= self.size or neighborNode[0] >= self.size:
-                        continue
-
-                    if neighborNode == end_node:
-                        self.node_has_been[neighborNode] = currentNode
-                        target = end_node
+                self.close.append(p)
+                del self.open[idx]
 
 
-                        while (target != start_node):
-                            print target
-                            optimial_distance = optimial_distance + 1
-                            for (k, v) in self.node_has_been.items():
-                                if k == target:
-                                    buf = self.node_has_been.get(k)
-                                    target = buf
-                                    break
-                        print start_node
+        def make_path(self, p):
+            while p:
+                self.path.append((p.x, p.y))
+                p = p.parent
+            self.path.reverse()
 
-                        # print distance
-                        print "distance:"
-                        print optimial_distance
-                        return
-                    if not map[neighborNode[0]][neighborNode[1]]:
-                        self.node_has_been[neighborNode] = currentNode
-                        map[neighborNode[0]][neighborNode[1]] = 1
-                        q.put(ComparableObj(distance_traveled,
-                                            end_node[0] + end_node[1] - neighborNode[0] - neighborNode[1],
-                                            neighborNode))
-        print "not distance"
+        def is_target(self, p):
+            if p != None:
+                return p.x == self.e_x and p.y == self.e_y
+            return False
+
+        def get_best(self):
+            best = None
+            old_value = sys.maxint
+            old_mht = sys.maxint
+            best_idx = -1
+            for idx, i in enumerate(self.open):
+                value, mht = self.get_dist(i)
+                if value < old_value:
+                    best = i
+                    best_idx = idx
+                    old_value = value
+                    old_mht = mht
+                elif value == old_value and mht < old_mht:
+                    best = i
+                    best_idx = idx
+                    old_value = value
+                    old_mht = mht
+
+
+            return best_idx, best
+
+
+        def get_dist(self, i):
+            return i.distance + (self.e_x - i.x) + (self.e_y - i.y), (self.e_x - i.x) + (self.e_y - i.y)
+
+
+        def extend_round(self, q):
+            xs = [0, -1, 1, 0]
+            ys = [-1, 0, 0, 1]
+            openMax = 0
+
+            for xx, yy in zip(xs,ys):
+                new_x, new_y = xx + q.x , yy + q.y
+
+                if not self.is_valid_coord(new_x, new_y):
+                    continue
+
+                node = Node(q, new_x, new_y,  q.distance + 1)
+                if self.node_in_close(node):
+                    continue
+
+                i = self.node_in_open(node)
+                if i != -1:
+                    if self.open[i].distance > node.distance:
+                        self.open[i].parent = q
+                        self.open[i].distance = node.distance
+                    continue
+                self.open.append(node)
+
+            if openMax < len(self.open):
+                openMax = len(self.open)
+            return openMax
+
+        def node_in_close(self, node):
+            for i in self.close:
+                if node.x == i.x and node.y == i.y:
+                    return True
+            return False
+
+        def node_in_open(self, node):
+
+            for i, n in enumerate(self.open):
+                if node.x == n.x and node.y == n.y:
+                    return i
+            return -1
+
+        def is_valid_coord(self, x, y):
+            if x < 0 or x >= self.w or y < 0 or y >= self.h:
+                return False
+            return self.map[x][y] != 1
 
 
 if __name__ == "__main__":
@@ -89,10 +146,10 @@ if __name__ == "__main__":
     for i in range(1, len(sys.argv)):
         print "argument", i, sys.argv[i]
     # set the size and density of this matrix
-    size = 200
-    start = Start.Start(size, 0.2)
-    start.print_matrix()
-    start.paint_random()
-    start.print_matrix()
-    astar = ASTAR()
-    astar.astar_init(start.get_matrix(), size)
+    size = 3000
+    start = Start.Start(size, 0.25)
+    # start.print_matrix()
+    # start.paint_random()
+    # start.print_matrix()
+    astar = ASTAR(start.get_matrix(), (0,0), (size-1, size-1))
+    astar.find_path()
