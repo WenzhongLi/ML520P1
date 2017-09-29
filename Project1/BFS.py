@@ -6,6 +6,7 @@
 import sys
 import Start
 import Queue
+import copy
 class BFS(object):
     # 初始化迷宫大小和密度
     def __init__(self):
@@ -22,6 +23,7 @@ class BFS(object):
     #DFS遍历
     def bfs_init(self, map, size):
         #start point
+        map = copy.deepcopy(map)
         self.node_to_go = {}
         self.node_has_been = dict()
         self.size = size
@@ -90,13 +92,13 @@ if __name__ == "__main__":
     for i in range(1, len(sys.argv)):
         print "argument", i, sys.argv[i]
     # set the size and density of this matrix
-    size = 100
+    size = 4
     start = Start.Start(size, 0.0)
     start.print_matrix()
     start.paint_random()
     start.print_matrix()
     bfs = BFS()
-    bfs.bfs_init(start.get_matrix(), size)
+    print bfs.bfs_init(start.get_matrix(), size)
     '''
     # print distance
     print "distance:"
