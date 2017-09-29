@@ -246,9 +246,3 @@ if __name__ == "__main__":
         print rep
 
 
-
-
- #   print ga.result()
-    #for i in range(100):
-    #    ga.evolve()
-    #    print ga.generation
