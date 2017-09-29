@@ -39,6 +39,6 @@ if __name__ == "__main__":
                 total_node_expand_r1 += r1
                 total_node_expand_r2 += r2
         # print "percentage: ",
-        print density, float(total_node_expand_r1)/100, float(total_node_expand_r1)/100
+        print density, float(total_node_expand_r1)/100, float(total_node_expand_r2)/100
     # dfs.dfs_route(m, size)
     print ('end')
