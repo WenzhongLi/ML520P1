@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Quantgroup</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/css/fileinput.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="starter-template.css" rel="stylesheet">
+
+    <link href="bootstrap-validator/css/bootstrapValidator.min.css" rel="stylesheet">
+    <!--<link href="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/css/fileinput.min.css" rel="stylesheet"> -->
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="bootstrap-table/bootstrap-table.min.css">
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Quantgroup</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="ChannelList.html">Channel List</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Change Order<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                	<li class="dropdown-header">List Order</li>
+	                <li><a href="OrderListLevel1.html">一级页面顺序</a></li>
+	                <li><a href="OrderListLevel2.html">二级页面顺序</a></li>
+	                <li role="separator" class="divider"></li>
+	                <li class="dropdown-header">Banner Order</li>
+	                <li><a href="OrderBannerLevel1.html">轮播顺序</a></li>
+                </ul>
+            </li>
+            <li class="active"><a href="#">Online View</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+  	<div class="container">
+  		<div class="panel-body" style="padding-bottom:0px;">
+	        <div class="panel panel-default">
+	            <div class="panel-heading">查询条件</div>
+	            <div class="panel-body">
+	                <form id="formSearch" class="form-horizontal">
+	                    <div class="form-group" style="margin-top:15px">
+	                        <label class="control-label col-sm-2" for="txt_phone_num">测试手机号</label>
+	                        <div class="col-sm-2">
+	                            <input type="text" class="form-control" id="txt_phone_num" value="12312312345">
+	                        </div>
+	                        <label class="control-label col-sm-1">页面</label>
+	                        <div class="col-sm-2">
+	                            <div class="form-group">
+								  <select class="form-control" id="sel_page">
+								    <option>一级页面</option>
+								    <option>二级页面</option>
+								    <option>banner</option>
+								  </select>
+								</div>
+	                        </div>
+	                        <label class="control-label col-sm-1">版本</label>
+	                        <div class="col-sm-1">
+	                            <div class="form-group">
+								  <select class="form-control" id="sel_phone_system">
+								    <option>iOS</option>
+								    <option>安卓</option>
+								  </select>
+								</div>
+	                        </div>
+	                        <div class="col-sm-2" style="text-align:left;">
+	                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+	                        </div>
+	                    </div>
+	                </form>
+	            </div>
+	        </div>
+        </div>
+        <div id="toolbar" class="btn-group">
+            <button id="btn_show_json" type="button" class="btn btn-default" data-toggle="modal" data-target="#raw_json_modal">
+                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> 原始json
+            </button>
+        </div>
+        <table class="table" id="tb_channel_list"></table>
+
+        <div class="modal fade" id="raw_json_modal" tabindex="-1" role="dialog" aria-labelledby="raw_json_modal_Label">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="raw_json_modal_Label">Raw Json</h4>
+		      </div>
+		      <div class="modal-body">
+		        <form role="form">
+					<div class="form-group">
+						<label for="name">Json 结果</label>
+						<textarea class="form-control" rows="15" id="input_text" readonly="readonly"></textarea>
+					</div>
+				</form>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <!-- <button type="button" class="btn btn-primary" id="btn_save_add_data">Save changes</button> -->
+		      </div>
+		    </div>
+		  </div>
+		</div>
+  	</div>
+
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="jquery-1.12.4/jquery.min.js"></script>
+
+    <script src="jqueryui-1.12.1/jquery-ui.min.js"></script>
+
+    <script src="bootstrap-3.3.7/js/bootstrap.min.js"></script>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="bootstrap-table/bootstrap-table.min.js"></script>
+
+	<!-- Latest compiled and minified Locales -->
+	<script src="bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
+
+	<script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/js/fileinput.min.js"></script>
+
+	<script src="bootstrap-validator/js/bootstrapValidator.min.js"></script>
+
+    <script src="JSON-js-master/json2.js"></script>
+    <script type="text/javascript">
+    var json;
+    $(function () {
+
+        //1.初始化Table
+        var oTable = new TableInit();
+        oTable.Init();
+
+        //2.初始化Button的点击事件
+        var oButtonInit = new ButtonInit();
+        oButtonInit.Init();
+
+        //3.表单初始化
+        //var oFormInit = new FormInit();
+        //oFormInit.Init();
+
+    });
+
+    </script>
+    <script type="text/javascript">
+    var ButtonInit = function () {
+        var oInit = new Object();
+        var postdata = {};
+
+        oInit.Init = function () {
+            //初始化页面上面的按钮事件
+			$("#btn_show_json").click(function () {
+				$('#input_text')[0].value=JSON.stringify(json);
+				}
+			);
+
+            $("#btn_query").click(function () {
+            	var level = 1;
+            	var position = "query";
+            	var source = 217;
+            	//console.warn(document.getElementById("sel_page"));
+            	//console.warn(document.getElementById("sel_phone_system"));
+            	var phone_num = $('#txt_phone_num')[0].value;
+            	//var json;
+            	if ($('#sel_page option:selected').index()==0){
+            		level = 1;
+            		position = "query";
+            	}else if($('#sel_page option:selected').index()==1){
+            		level = 2;
+            		position = "query";
+            	}else if($('#sel_page option:selected').index()==2){
+            		level = 1;
+            		position = "banner";
+            	}else{
+            		return;//add new index here
+            	}
+            	if($('#sel_phone_system option:selected').index()==0){
+            		source = 214;//iOS
+            	}else if($('#sel_phone_system option:selected').index()==1){
+            		source = 217;//Android
+            	}else{
+            		return;//add new index here
+            	}
+            	$.ajax({
+					url:'/backend/checkOnline',
+					type:'post',
+					dataType:'json',
+					data:{
+						level,position,source,phone_num
+					},
+					success: function(data){
+						json = data;
+						var table = {};
+						table.total=json.data.length;
+						table.rows= json.data;
+						console.warn(table);
+						$('#tb_channel_list').bootstrapTable('load',table);
+					},
+					error: function(){
+
+					}
+            	})
+            });
+
+        };
+
+        return oInit;
+    };
+
+    </script>
+    <script type="text/javascript">
+    var TableInit = function () {
+        var oTableInit = new Object();
+        //初始化Table
+        oTableInit.Init = function () {
+            $('#tb_channel_list').bootstrapTable({
+                url:'',         //请求后台的URL（*）
+                method: 'get',                      //请求方式（*）
+                toolbar: '#toolbar',                //工具按钮用哪个容器
+                striped: true,                      //是否显示行间隔色
+                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: false,                   //是否显示分页（*）
+                sortable: false,                     //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                queryParams: oTableInit.queryParams,//传递参数（*）
+                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber:1,                       //初始化加载第一页，默认第一页
+                pageSize: 10,                       //每页的记录行数（*）
+                pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                search: false,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                strictSearch: true,
+                showColumns: true,                  //是否显示所有的列
+                showRefresh: true,                  //是否显示刷新按钮
+                minimumCountColumns: 2,             //最少允许的列数
+                clickToSelect: true,                //是否启用点击选中行
+                height: 650,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                uniqueId: "channelId",                     //每一行的唯一标识，一般为主键列
+                showToggle:true,                    //是否显示详细视图和列表视图的切换按钮
+                cardView: false,                    //是否显示详细视图
+                detailView: false,                   //是否显示父子表
+                singleSelect : true,				//单选
+                columns: [{
+                	field: 'channelId',
+                    title: '渠道号'
+                }, {
+                    field: 'name',
+                    title: '合作方'
+                }, {
+                    field: 'logoUrl',
+                    title: 'LOGO',
+                    align: 'center',
+                  	formatter: function(value,row,index){
+                    	//console.warn(value);
+                    	if(value!=null&&value.length>42){
+                    		return '<img  src='+value+' class="img-rounded" height="50" width="50">';
+                    	}
+                    	else{
+                    		return "None";
+                    	}
+                    }
+                }, {
+                    field: 'bannerLogoUrl',
+                    title: 'Banner',
+                    align: 'center',
+                  	formatter: function(value,row,index){
+                    	//console.warn(value);
+                    	if(value!=null&&value.length>43){
+                    		return '<img  src='+value+' class="img-rounded" height="50" width="118">';
+                    	}
+                    	else{
+                    		return "None";
+                    	}
+                    }
+                }, {
+                    field: 'link',
+                    title: '渠道链接',
+                    //align: 'center',
+                  	formatter: function(value,row,index){
+                    	//console.warn(value);
+                    	if(value!=null){
+                    		return '<a href=\"javascript:\" onClick=\"window.open(\''+value+'\')\">'+value+'</a>';
+                    		//'<a href="'+value+'">'+value+'</a>';
+
+                    	}
+                    	else{
+                    		return "None";
+                    	}
+                    }
+                }]
+            });
+        };
+        return oTableInit;
+    };
+    </script>
+  </body>
+</html>
