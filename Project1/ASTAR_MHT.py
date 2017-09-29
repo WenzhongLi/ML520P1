@@ -12,11 +12,25 @@ class Node :
         self.distance = distance
 
 class ASTAR:
-        def __init__(self, map, start_node, end_node):
-            self.s_x = start_node[0]
-            self.s_y = start_node[1]
-            self.e_x = end_node[0]
-            self.e_y = end_node[1]
+        def __init__(self):
+            self.s_x = 0
+            self.s_y = 0
+            self.e_x = 0
+            self.e_y = 0
+
+            self.map = None
+            self.w = 0
+            self.h = 0
+
+            self.open = []
+            self.close = []
+            self.path = []
+
+        def find_path(self, map, size):
+            self.s_x = 0
+            self.s_y = 0
+            self.e_x = size - 1
+            self.e_y = size - 1
 
             self.map = map
             self.w = len(map)
@@ -26,7 +40,6 @@ class ASTAR:
             self.close = []
             self.path = []
 
-        def find_path(self):
             p = Node(None, self.s_x, self.s_y, 0.0)
             traversal_node_count = 0
 
@@ -146,10 +159,10 @@ if __name__ == "__main__":
     for i in range(1, len(sys.argv)):
         print "argument", i, sys.argv[i]
     # set the size and density of this matrix
-    size = 3000
-    start = Start.Start(size, 0.25)
-    # start.print_matrix()
-    # start.paint_random()
-    # start.print_matrix()
-    astar = ASTAR(start.get_matrix(), (0,0), (size-1, size-1))
-    astar.find_path()
+    size = 10
+    start = Start.Start(size, 0.2)
+    start.print_matrix()
+    start.paint_random()
+    start.print_matrix()
+    astar = ASTAR()
+    astar.find_path(start.get_matrix(), size)
