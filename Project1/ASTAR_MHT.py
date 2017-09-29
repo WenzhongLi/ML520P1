@@ -146,10 +146,10 @@ if __name__ == "__main__":
     for i in range(1, len(sys.argv)):
         print "argument", i, sys.argv[i]
     # set the size and density of this matrix
-    size = 10
-    start = Start.Start(size, 0)
-    start.print_matrix()
-    start.paint_random()
-    start.print_matrix()
+    size = 3000
+    start = Start.Start(size, 0.25)
+    # start.print_matrix()
+    # start.paint_random()
+    # start.print_matrix()
     astar = ASTAR(start.get_matrix(), (0,0), (size-1, size-1))
     astar.find_path()
