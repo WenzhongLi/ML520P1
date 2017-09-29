@@ -48,7 +48,7 @@ class ASTAR:
                 openSize = self.extend_round(p)
 
                 if not self.open:
-                    print 0, None
+                    # print 0, None
                     return 0, None
 
                 idx, p = self.get_best()
@@ -158,8 +158,8 @@ if __name__ == "__main__":
     for i in range(1, len(sys.argv)):
         print "argument", i, sys.argv[i]
     # set the size and density of this matrix
-    size = 10
-    start = Start.Start(size, 1)
+    size = 100
+    start = Start.Start(size, 0.4)
     start.print_matrix()
     start.paint_random()
     start.print_matrix()

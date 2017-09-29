@@ -51,7 +51,8 @@ class ASTAR:
 
 
                 if not self.open:
-                    return
+                    # print 0, None
+                    return 0, None
 
                 idx, p = self.get_best()
 
