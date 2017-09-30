@@ -84,7 +84,8 @@
 										<h3></h3>
 										<h3>White: Road</h3>
 										<h3>Black: Wall</h3>
-										<h3>Red: Travel Path</h3>
+										<h3>Yellow: Travel Path</h3>
+										<h3>Distance: <div style="display:inline;" id = "distance" ></div></h3>
         								<input type = "button" value = "Show Map" id ="t3">
         								<input type = "button" value = "BFS" id ="t4">
         								<input type = "button" value = "DFS" id ="t5">
@@ -285,6 +286,7 @@
             btn1.onclick = function(){
                     clos = json_data.original.size;
                     map_to_paint = json_data.original.map;
+    				document.getElementById("distance").innerHTML = '';
 
                     rows = clos;
                     tab = document.createElement("table");
@@ -323,6 +325,8 @@
             btn2.onclick = function(){
                     clos = json_data.original.size;
                     map_to_paint = json_data.BFS.map;
+                    map_to_paint = json_data.BFS.map;
+    				document.getElementById("distance").innerHTML = json_data.BFS.distance;
 
                     rows = clos;
                     tab = document.createElement("table");
@@ -361,6 +365,7 @@
             btn3.onclick = function(){
                     clos = json_data.original.size;
                     map_to_paint = json_data.DFS.map;
+    				document.getElementById("distance").innerHTML = json_data.DFS.distance;
 
                     rows = clos;
                     tab = document.createElement("table");
@@ -399,6 +404,8 @@
             btn4.onclick = function(){
                     clos = json_data.original.size;
                     map_to_paint = json_data.EUC.map;
+    				document.getElementById("distance").innerHTML = json_data.EUC.distance;
+
 
                     rows = clos;
                     tab = document.createElement("table");
@@ -437,6 +444,7 @@
             btn5.onclick = function(){
                     clos = json_data.original.size;
                     map_to_paint = json_data.MHT.map;
+    				document.getElementById("distance").innerHTML = json_data.MHT.distance;
 
                     rows = clos;
                     tab = document.createElement("table");
