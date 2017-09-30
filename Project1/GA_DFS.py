@@ -3,8 +3,9 @@
 '''
 @author: Juntao Tan
 '''
-
+import math
 import random
+import operator
 import Start
 import DFS
 import copy
@@ -182,6 +183,33 @@ class GA():
 
 
     def result(self):
+        res = [0] * 5   #reserve result
+
+        best_chromosome_num = 0    #the best chromosome in the current generation
+        best_fit = 0
+        for i in range(0, len(self.generation)):
+            if self.fitness(self.generation[i]) > best_fit:
+                best_fit = self.fitness(self.generation[i])
+                best_chromosome_num = i
+        dfs = DFS.DFS()
+        dfs_rout = copy.deepcopy(dfs.dfs_route(self.generation[best_chromosome_num],self.size))
+
+        res[0] = copy.copy(dfs_rout[0])        # does the maze has solution
+        res[1] = copy.deepcopy(dfs.optimal_road)   # solution road list
+        res[2] = copy.copy(dfs_rout[1])        # distance
+        res[3] = copy.copy(dfs_rout[2])        # solve count
+        res[4] = copy.copy(dfs_rout[3])        # block
+        print 'has solution? ', res[0]
+        print 'road', res[1]
+        print 'distance: ',res[2]
+        print 'count: ', res[3]
+        print 'fringe: ', res[4]
+        return self.generation[best_chromosome_num]
+
+
+
+
+
 
 
         best_fit = 0
@@ -197,15 +225,11 @@ class GA():
         #for i in self.generation:
         #    fit.append(self.fitness(i))
         best_chromosome_num = 0
-        best_fit = 0
-        for i in range(0,len(self.generation)):
-            if self.fitness(self.generation[i]) > best_fit:
-                best_fit = self.fitness(self.generation[i])
-                best_chromosome_num = i
-        dfs = DFS.DFS()
-        dfs.dfs_route(self.generation[best_chromosome_num],self.size)
-        dfs.print_optimal(self.generation[best_chromosome_num])
-        return self.generation[best_chromosome_num]
+
+        #dfs = DFS.DFS()
+        #dfs.dfs_route(self.generation[best_chromosome_num],self.size)
+        #dfs.print_optimal(self.generation[best_chromosome_num])
+        #return self.generation[best_chromosome_num]
 
 
 
@@ -243,6 +267,5 @@ if __name__ == "__main__":
         if rep > 20:
             break
         last_result = result
-        print rep
-
+        #print rep
 
