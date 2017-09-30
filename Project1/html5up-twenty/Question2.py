@@ -52,7 +52,7 @@ if __name__ == "__main__":
                 print route[i][j],
         print '\n',
     print result
-    data["DFS"] = {"size": size, "map": route}
+    data["DFS"] = {"size": size, "map": route, "distance": result[2]}
     # BFS
     bfs = BFS.BFS()
     result = bfs.bfs_init(start.get_matrix(), size)
@@ -66,7 +66,7 @@ if __name__ == "__main__":
             else:
                 print route[i][j],
         print '\n',
-    data["BFS"] = {"size": size, "map": route}
+    data["BFS"] = {"size": size, "map": route, "distance": result[2]}
     print result
     # A-MHT
     astar = ASTAR_MHT.ASTAR()
@@ -81,7 +81,7 @@ if __name__ == "__main__":
             else:
                 print route[i][j],
         print '\n',
-    data["MHT"] = {"size": size, "map": route}
+    data["MHT"] = {"size": size, "map": route, "distance": result[2]}
     print result
     # A-Eud
     astar = ASTAR_EUC.ASTAR()
@@ -96,7 +96,7 @@ if __name__ == "__main__":
             else:
                 print route[i][j],
         print '\n',
-    data["EUC"] = {"size": size, "map": route}
+    data["EUC"] = {"size": size, "map": route, "distance": result[2]}
     print result
     json = json.dumps(data)
     f1.write("var json_data = " + json + ";")
