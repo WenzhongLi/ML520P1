@@ -56,7 +56,7 @@ class GA():
 
 
     def evolve(self):
-        parents = copy.deepcopy(self.selection())
+        parents = copy.deepcopy(self.selection)
         children = copy.deepcopy(self.crossover(parents))
         self.generation = copy.deepcopy(children)
         #self.mutation(self.mu_rate)
@@ -65,6 +65,7 @@ class GA():
 
 
 
+    @property
     def selection(self):
         # del the mazes with no solution
         #good_generation = []
