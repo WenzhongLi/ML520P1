@@ -34,11 +34,11 @@ if __name__ == "__main__":
             success = dfs.dfs_route(start.get_matrix(), size)
             if success[0] == 1:
                 count += 1
-                r1 = a_mht.find_path(start.get_matrix(), size)[4]
-                r2 = a_euc.find_path(start.get_matrix(), size)[4]
+                r1 = a_mht.find_path(start.get_matrix(), size)[3]
+                r2 = a_euc.find_path(start.get_matrix(), size)[3]
                 total_node_expand_r1 += r1
                 total_node_expand_r2 += r2
         # print "percentage: ",
-        print density, float(total_node_expand_r1)/100, float(total_node_expand_r1)/100
+        print density, float(total_node_expand_r1)/100, float(total_node_expand_r2)/100
     # dfs.dfs_route(m, size)
     print ('end')

@@ -58,8 +58,8 @@ class DFS(object):
             target = (current_node[0] - 1, current_node[1])
             if self.move_to_node(target, map, current_distance + 1, size, node_stack_map):
                 if target == end_node:
-                    self.reach_end(start_node, end_node, tracert, current_distance + 1, current_node, map)
-                    return 1, current_distance + 1, count, max_stack
+                    route = self.reach_end(start_node, end_node, tracert, current_distance + 1, current_node, map)
+                    return 1, route, current_distance + 1, count, max_stack
                 else:
                     node_stack.append(target)
                     node_stack_map[target] = 1
@@ -69,8 +69,8 @@ class DFS(object):
             target = (current_node[0], current_node[1] - 1)
             if self.move_to_node(target, map, current_distance + 1, size, node_stack_map):
                 if target == end_node:
-                    self.reach_end(start_node, end_node, tracert, current_distance + 1, current_node, map)
-                    return 1, current_distance + 1, count, max_stack
+                    route = self.reach_end(start_node, end_node, tracert, current_distance + 1, current_node, map)
+                    return 1, route, current_distance + 1, count, max_stack
                 else:
                     node_stack.append(target)
                     node_stack_map[target] = 1
@@ -80,8 +80,8 @@ class DFS(object):
             target = (current_node[0] + 1, current_node[1])
             if self.move_to_node(target, map, current_distance + 1, size, node_stack_map):
                 if target == end_node:
-                    self.reach_end(start_node, end_node, tracert, current_distance + 1, current_node, map)
-                    return 1, current_distance + 1, count, max_stack
+                    route = self.reach_end(start_node, end_node, tracert, current_distance + 1, current_node, map)
+                    return 1, route, current_distance + 1, count, max_stack
                 else:
                     node_stack.append(target)
                     node_stack_map[target] = 1
@@ -91,8 +91,8 @@ class DFS(object):
             target = (current_node[0], current_node[1] + 1)
             if self.move_to_node(target, map, current_distance + 1, size, node_stack_map):
                 if target == end_node:
-                    self.reach_end(start_node, end_node, tracert, current_distance + 1, current_node, map)
-                    return 1, current_distance + 1, count, max_stack
+                    route = self.reach_end(start_node, end_node, tracert, current_distance + 1, current_node, map)
+                    return 1, route, current_distance + 1, count, max_stack
                 else:
                     node_stack.append(target)
                     node_stack_map[target] = 1
@@ -133,16 +133,17 @@ class DFS(object):
             return 0
 
     def reach_end(self, start_node, end_node, tracert, distance, current_node, map):
-        if distance < self.min_distance:
-            tracert[end_node] = current_node
-            # print distance
-            list = []
-            list.append(end_node)
-            while current_node != start_node:
-                list.append(current_node)
-                current_node = tracert[current_node]
-            list.append(start_node)
-            self.optimal_road = list
+        #if distance < self.min_distance:
+        tracert[end_node] = current_node
+        # print distance
+        list = []
+        list.append(end_node)
+        while current_node != start_node:
+            list.append(current_node)
+            current_node = tracert[current_node]
+        list.append(start_node)
+        self.optima_road = list
+        return list
             # return list
             # result = copy.deepcopy(map)
             # for node in list:
@@ -176,7 +177,7 @@ class DFS(object):
                 else:
                     print(result[k][j]),
             print('\n'),
-        return
+        return result
 
 
 if __name__ == "__main__":
@@ -185,7 +186,7 @@ if __name__ == "__main__":
         print "argument", i, sys.argv[i]
     print ('start initialize')
     # set the size and density of this matrix
-    size = 100
+    size = 10
     start = Start.Start(size, 0.3)
     # start.print_matrix()
     start.paint_random()
