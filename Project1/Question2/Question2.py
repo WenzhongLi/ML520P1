@@ -16,19 +16,23 @@ import ASTAR_EUC
 
 if __name__ == "__main__":
     print "script_name", sys.argv[0]
+    size = 30
     for i in range(1, len(sys.argv)):
-        print "argument", i, sys.argv[i]
+        print "argument", i, "is :", sys.argv[i]
+        if sys.argv[1]:
+            input_length = int(sys.argv[1])
+            if 9 < input_length < 51:
+                size = input_length
     print ('start initialize')
     f1 = open('data.js', 'w')
     # f1.write('hello boy!')
     dfs = DFS.DFS()
-    size = 10
-    start = Start.Start(size, 0.3)
+    start = Start.Start(size, 0.2)
     start.paint_random()
     start.print_matrix()
     # test map
     while dfs.dfs_route(start.get_matrix(), size)[0] == 0:
-        start = Start.Start(size, 0.3)
+        start = Start.Start(size, 0.2)
         start.paint_random()
     map = copy.copy(start.get_matrix())
     data = dict()
@@ -36,8 +40,18 @@ if __name__ == "__main__":
     data["original"] = original
     # DFS
     result = dfs.dfs_route(start.get_matrix(), size)
-    route = dfs.print_optimal(copy.deepcopy(map))
-    # print result
+    # route = dfs.print_optimal(copy.deepcopy(map))
+    route = copy.deepcopy(map)
+    for node in result[1]:
+        route[node[0]][node[1]] = 2
+    for i in range(0, size):
+        for j in range(0, size):
+            if route[i][j] == 2:
+                print "\033[1;35m2\033[0m",
+            else:
+                print route[i][j],
+        print '\n',
+    print result
     data["DFS"] = {"size": size, "map": route}
     # BFS
     bfs = BFS.BFS()
@@ -45,10 +59,13 @@ if __name__ == "__main__":
     route = copy.deepcopy(map)
     for node in result[1]:
         route[node[0]][node[1]] = 2
-    # for i in range(0,size):
-    #     for j in range(0, size):
-    #         print route[i][j],
-    #     print '\n',
+    for i in range(0, size):
+        for j in range(0, size):
+            if route[i][j] == 2:
+                print "\033[1;35m2\033[0m",
+            else:
+                print route[i][j],
+        print '\n',
     data["BFS"] = {"size": size, "map": route}
     print result
     # A-MHT
@@ -57,6 +74,13 @@ if __name__ == "__main__":
     route = copy.deepcopy(map)
     for node in result[1]:
         route[node[0]][node[1]] = 2
+    for i in range(0, size):
+        for j in range(0, size):
+            if route[i][j] == 2:
+                print "\033[1;35m2\033[0m",
+            else:
+                print route[i][j],
+        print '\n',
     data["MHT"] = {"size": size, "map": route}
     print result
     # A-Eud
@@ -65,6 +89,13 @@ if __name__ == "__main__":
     route = copy.deepcopy(map)
     for node in result[1]:
         route[node[0]][node[1]] = 2
+    for i in range(0, size):
+        for j in range(0, size):
+            if route[i][j] == 2:
+                print "\033[1;35m2\033[0m",
+            else:
+                print route[i][j],
+        print '\n',
     data["EUC"] = {"size": size, "map": route}
     print result
     json = json.dumps(data)
