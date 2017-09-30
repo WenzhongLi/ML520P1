@@ -16,17 +16,17 @@ import ASTAR_EUC
 
 if __name__ == "__main__":
     print "script_name", sys.argv[0]
+    size = 30
     for i in range(1, len(sys.argv)):
         print "argument", i, "is :", sys.argv[i]
+        if sys.argv[1]:
+            input_length = int(sys.argv[1])
+            if 9 < input_length < 51:
+                size = input_length
     print ('start initialize')
     f1 = open('data.js', 'w')
     # f1.write('hello boy!')
     dfs = DFS.DFS()
-    size = 30
-    if sys.argv[i]:
-        input_length = int(sys.argv[i])
-        if 9 < input_length < 51:
-            size = input_length
     start = Start.Start(size, 0.2)
     start.paint_random()
     start.print_matrix()
