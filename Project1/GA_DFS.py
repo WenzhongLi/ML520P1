@@ -224,12 +224,6 @@ class GA():
         #fit = []
         #for i in self.generation:
         #    fit.append(self.fitness(i))
-        best_chromosome_num = 0
-
-        #dfs = DFS.DFS()
-        #dfs.dfs_route(self.generation[best_chromosome_num],self.size)
-        #dfs.print_optimal(self.generation[best_chromosome_num])
-        #return self.generation[best_chromosome_num]
 
 
 
