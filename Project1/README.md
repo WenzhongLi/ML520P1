@@ -14,10 +14,14 @@ It prioritizes paths that seem to be leading closer to the goal.
 ASTAR_EUC.py is an implement of A* using Euclidean Distance.
 ASTAR_MHT.py is an implement of A* using Manhattan Distance.
 ### Genetic Algorithm
-
+A genetic algorithm (GA) is a meta-heuristic inspired by the process of natural selection that belongs to the larger class of evolutionary algorithms (EA).
+Genetic algorithms are commonly used to generate high-quality solutions to optimization and search problems by relying on bio-inspired operators such as mutation, crossover and selection.
+See Genetic Script chapter for more GA Script detail.
 ## Statistics Script
 ### Question 1
-
+Question1.py run all 4 Algorithm on the same solvable maze.
+From p = 0.0 to p = 4.0, run them all on stet of increasing size of maze, starting at 10*10.
+Whenever there is a algorithm exceeded 60 seconds, end of Script.
 ### Question 2
 Question2 file include visualization by HTML and Python Script.
 Question2.py is a data generate Script.
@@ -63,3 +67,7 @@ Please double click the index.html and check out the web page~
 ### data.js
 Contain data in JSON form. Import to HTML file as a "*.js" file.
 Data include the original map and the solution provided by all 4 algorithm.
+## Genetic Script
+### GA DFS
+### GA BFS
+### GA A*
