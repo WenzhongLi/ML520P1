@@ -3,14 +3,13 @@
 '''
 @author: Juntao Tan
 '''
-import math
 import random
-import operator
-import Start
-import DFS
+import Project1.Start
+import Project1.DFS
 import copy
-import BFS
-import ASTAR_EUC
+import json
+import Project1.BFS
+import Project1.ASTAR_EUC
 
 class GA():
     def __init__(self, size, count,mu_rate):
@@ -26,7 +25,7 @@ class GA():
 
     def gen_chromosome(self, size):
         #randomly generate a maze
-        maze = Start.Start(size, 0.3)
+        maze = Project1.Start.Start(size, 0.3)
         maze.paint_random()
         chromosome = maze.get_matrix() # chromosome is a size x size random matrix
         return chromosome
@@ -48,10 +47,10 @@ class GA():
 
 
     def fitness(self, chromsome):
-        astar = ASTAR_EUC.ASTAR()
+        astar = Project1.ASTAR_EUC.ASTAR()
         res = astar.find_path(chromsome, self.size)
         if res[0] == 1:
-            return res[2]
+            return res[4]
         else:
             return res[0]
 
@@ -189,7 +188,7 @@ class GA():
 
 
 
-    def result(self):    
+    def result(self):
         res = [0] * 5   #reserve result
 
         best_chromosome_num = 0    #the best chromosome in the current generation
@@ -198,7 +197,7 @@ class GA():
             if self.fitness(self.generation[i]) > best_fit:
                 best_fit = self.fitness(self.generation[i])
                 best_chromosome_num = i
-        astar = ASTAR_EUC.ASTAR()
+        astar = Project1.ASTAR_EUC.ASTAR()
         res = copy.deepcopy(astar.find_path(self.generation[best_chromosome_num], self.size))
         #print res
 
@@ -256,4 +255,10 @@ if __name__ == "__main__":
         last_result = result
         #print rep
     print ga.get_optimal_chromesome()
+    f1 = open('GA_ASTAR_EUC_FRINGE', 'w')
+    data = copy.copy(ga.get_optimal_chromesome())
+    json = json.dumps(data)
+    f1.write("GA_ASTAR_Optimal_EUC_FRINGE = " + json + ";")
+    f1.flush()
+    f1.close()
 

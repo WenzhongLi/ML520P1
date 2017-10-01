@@ -153,7 +153,7 @@ if __name__ == "__main__":
         print "argument", i, sys.argv[i]
     print ('start initialize')
     # set the size and density of this matrix
-    size = 100
+    size = 10
     start = Start.Start(size, 0.3)
     # start.print_matrix()
     start.paint_random()

@@ -3,16 +3,15 @@
 '''
 @author: Juntao Tan
 '''
-import math
+import Project1.Start
+import Project1.BFS
 import random
-import operator
-import Start
-import DFS
-import copy
 import json
+import copy
+
 
 class GA():
-    def __init__(self, size, count, mu_rate):
+    def __init__(self, size, count,mu_rate):
         self.mu_rate = mu_rate
         # length of per chromosome
         self.size = size
@@ -21,20 +20,16 @@ class GA():
         # randomly create generation
         self.generation = self.gen_generation(size,count)
 
-
-
     def gen_chromosome(self, size):
         #randomly generate a maze
-        maze = Start.Start(size, 0.3)
+        maze = Project1.Start.Start(size, 0.3)
         maze.paint_random()
         chromosome = maze.get_matrix() # chromosome is a size x size random matrix
         return chromosome
 
-
     def gen_generation(self, size, count):
         # generate the first generation
         #return [self.gen_chromosome(size) for i in range(count)]
-
         generation = []
         i = 0
         while i < count:
@@ -45,26 +40,20 @@ class GA():
                 i += 1
         return generation
 
-
     def fitness(self, chromsome):
-        dfs = DFS.DFS()
-        res = dfs.dfs_route(chromsome, self.size)
+        bfs = Project1.BFS.BFS()
+        res = bfs.bfs_init(chromsome, self.size)
         if res[0] == 1:
-            return res[3]
+            return res[4]
         else:
             return res[0]
 
-
     def evolve(self):
-        parents = copy.deepcopy(self.selection())
+        parents = copy.deepcopy(self.selection)
         children = copy.deepcopy(self.crossover(parents))
         self.generation = copy.deepcopy(children)
-        #self.mutation(self.mu_rate)
 
- #       self.mutation()
-
-
-
+    @property
     def selection(self):
         # del the mazes with no solution
         #good_generation = []
@@ -73,7 +62,6 @@ class GA():
         #        good_generation.append(i)
         # count total fitness
         parents = []
-
         sumfit = 0
         for i in self.generation:
             sumfit = sumfit + self.fitness(i)
@@ -176,6 +164,15 @@ class GA():
         return children
 
 
+    def get_optimal_chromesome(self):
+        best_chromosome_num = 0  # the best chromosome in the current generation
+        best_fit = 0
+        for i in range(0, len(self.generation)):
+            if self.fitness(self.generation[i]) > best_fit:
+                best_fit = self.fitness(self.generation[i])
+                best_chromosome_num = i
+        return self.generation[best_chromosome_num]
+
 
 
     def result(self):
@@ -187,17 +184,27 @@ class GA():
             if self.fitness(self.generation[i]) > best_fit:
                 best_fit = self.fitness(self.generation[i])
                 best_chromosome_num = i
-        dfs = DFS.DFS()
-        res = copy.deepcopy(dfs.dfs_route(self.generation[best_chromosome_num],self.size))
-
-    def get_optimal_chromesome(self):
-        best_chromosome_num = 0  # the best chromosome in the current generation
-        best_fit = 0
-        for i in range(0, len(self.generation)):
-            if self.fitness(self.generation[i]) > best_fit:
-                best_fit = self.fitness(self.generation[i])
-                best_chromosome_num = i
+        bfs = Project1.BFS.BFS()
+        res = copy.deepcopy(bfs.bfs_init(self.generation[best_chromosome_num],self.size))
         return self.generation[best_chromosome_num]
+
+
+
+        best_fit = 0
+        #best_chromosome
+        #or i in self.generation:
+        #    if self.fitness(i)> best_fit:
+        #        best_fit = self.fitness(i)
+        #sumfit = 0
+        #for i in self.generation:
+        #    sumfit = sumfit + self.fitness(i)
+
+        #fit = []
+        #for i in self.generation:
+        #    fit.append(self.fitness(i))
+
+
+
 
 
     def mutation(self, mu_rate):
@@ -214,13 +221,9 @@ class GA():
 
 
 
-
-
-
 if __name__ == "__main__":
     ga = GA(10, 30, 0.3)
     last_result = ga.result()
-
     rep = 0
     for i in range(100000000):
         ga.evolve()
@@ -234,11 +237,10 @@ if __name__ == "__main__":
         last_result = result
     print ga.get_optimal_chromesome()
         #print rep
-    f1 = open('GA_DFS_Nodes', 'w')
+    f1 = open('GA_BFS_Fringe', 'w')
     data = copy.copy(ga.get_optimal_chromesome())
     json = json.dumps(data)
-    f1.write("GA_DFS_Optimal_Nodes = " + json + ";")
+    f1.write("GA_BFS_Optimal_Fringe = " + json + ";")
     f1.flush()
     f1.close()
-
 
