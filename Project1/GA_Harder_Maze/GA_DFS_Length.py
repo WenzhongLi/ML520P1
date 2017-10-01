@@ -188,6 +188,8 @@ class GA():
                 best_chromosome_num = i
         dfs = Project1.DFS.DFS()
         res = copy.deepcopy(dfs.dfs_route(self.generation[best_chromosome_num],self.size))
+        print res
+        return res
 
     def get_optimal_chromesome(self):
         best_chromosome_num = 0  # the best chromosome in the current generation

@@ -201,7 +201,8 @@ class GA():
         res = copy.deepcopy(astar.find_path(self.generation[best_chromosome_num], self.size))
 
 
-        return self.generation[best_chromosome_num]
+        print res
+        return res
 
 
 
@@ -245,7 +246,7 @@ class GA():
 
 
 if __name__ == "__main__":
-    ga = GA(10, 30, 0.3)
+    ga = GA(100, 30, 0.3)
     last_result = ga.result()
     rep = 0
     for i in range(100000000):

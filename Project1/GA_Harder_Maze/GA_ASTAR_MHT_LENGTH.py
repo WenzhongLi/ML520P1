@@ -200,27 +200,8 @@ class GA():
         astar = Project1.ASTAR_MHT.ASTAR()
         res = copy.deepcopy(astar.find_path(self.generation[best_chromosome_num], self.size))
 
-
-        return self.generation[best_chromosome_num]
-
-
-
-
-
-
-
-        best_fit = 0
-        #best_chromosome
-        #or i in self.generation:
-        #    if self.fitness(i)> best_fit:
-        #        best_fit = self.fitness(i)
-        #sumfit = 0
-        #for i in self.generation:
-        #    sumfit = sumfit + self.fitness(i)
-
-        #fit = []
-        #for i in self.generation:
-        #    fit.append(self.fitness(i))
+        print res
+        return res
 
 
 
@@ -245,7 +226,7 @@ class GA():
 
 
 if __name__ == "__main__":
-    ga = GA(10, 30, 0.3)
+    ga = GA(100, 30, 0.3)
     last_result = ga.result()
     rep = 0
     for i in range(100000000):
