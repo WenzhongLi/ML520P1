@@ -255,10 +255,14 @@ if __name__ == "__main__":
         last_result = result
         #print rep
     print ga.get_optimal_chromesome()
-    f1 = open('GA_ASTAR_EUC_LENGTH', 'w')
-    data = copy.copy(ga.get_optimal_chromesome())
+
+    f1 = open('GA_OPTIMAL_MAZE/GA_ASTAR_EUC_LENGTH.js', 'w')
+    map = copy.copy(ga.get_optimal_chromesome())
+    data = dict()
+    original = {"size": len(map), "map": map}
+    data["original"] = original
     json = json.dumps(data)
-    f1.write("GA_ASTAR_Optimal_EUC_LENGTH = " + json + ";")
+    f1.write("var json_data = " + json + ";")
     f1.flush()
     f1.close()
 

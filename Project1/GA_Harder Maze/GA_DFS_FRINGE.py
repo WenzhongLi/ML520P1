@@ -233,10 +233,22 @@ if __name__ == "__main__":
         last_result = result
     print ga.get_optimal_chromesome()
         #print rep
+    '''
     f1 = open('GA_DFS_Fringe', 'w')
     data = copy.copy(ga.get_optimal_chromesome())
     json = json.dumps(data)
     f1.write("GA_DFS_Optimal_Fringe = " + json + ";")
+    f1.flush()
+    f1.close()
+    '''
+
+    f1 = open('GA_OPTIMAL_MAZE/GA_DFS_FRINGE.js', 'w')
+    map = copy.copy(ga.get_optimal_chromesome())
+    data = dict()
+    original = {"size": len(map), "map": map}
+    data["original"] = original
+    json = json.dumps(data)
+    f1.write("var json_data = " + json + ";")
     f1.flush()
     f1.close()
 
