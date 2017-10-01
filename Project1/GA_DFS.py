@@ -175,11 +175,6 @@ class GA():
         return children
 
 
-    def sort(self, generation):
-        sorted_generation = []
-
-
-
 
 
     def result(self):
@@ -193,56 +188,15 @@ class GA():
                 best_chromosome_num = i
         dfs = DFS.DFS()
         res = copy.deepcopy(dfs.dfs_route(self.generation[best_chromosome_num],self.size))
-        print res
-        '''
-        res = [0] * 5   #reserve result
 
-        best_chromosome_num = 0    #the best chromosome in the current generation
+    def get_optimal_chromesome(self):
+        best_chromosome_num = 0  # the best chromosome in the current generation
         best_fit = 0
         for i in range(0, len(self.generation)):
             if self.fitness(self.generation[i]) > best_fit:
                 best_fit = self.fitness(self.generation[i])
                 best_chromosome_num = i
-        dfs = DFS.DFS()
-        dfs_rout = copy.deepcopy(dfs.dfs_route(self.generation[best_chromosome_num],self.size))
-
-        res[0] = copy.copy(dfs_rout[0])        # does the maze has solution
-        res[1] = copy.deepcopy(dfs.optimal_road)   # solution road list
-        res[2] = copy.copy(dfs_rout[1])        # distance
-        res[3] = copy.copy(dfs_rout[2])        # solve count
-        res[4] = copy.copy(dfs_rout[3])        # block
-        print 'has solution? ', res[0]
-        print 'road', res[1]
-        print 'distance: ',res[2]
-        print 'count: ', res[3]
-        print 'fringe: ', res[4]
         return self.generation[best_chromosome_num]
-        '''
-
-
-
-
-
-
-        best_fit = 0
-        #best_chromosome
-        #or i in self.generation:
-        #    if self.fitness(i)> best_fit:
-        #        best_fit = self.fitness(i)
-        #sumfit = 0
-        #for i in self.generation:
-        #    sumfit = sumfit + self.fitness(i)
-
-        #fit = []
-        #for i in self.generation:
-        #    fit.append(self.fitness(i))
-
-
-
-
-
-
-
 
 
     def mutation(self, mu_rate):
@@ -259,9 +213,13 @@ class GA():
 
 
 
+
+
+
 if __name__ == "__main__":
-    ga = GA(100, 30, 0.3)
+    ga = GA(10, 30, 0.3)
     last_result = ga.result()
+
     rep = 0
     for i in range(100000000):
         ga.evolve()
@@ -273,5 +231,7 @@ if __name__ == "__main__":
         if rep > 20:
             break
         last_result = result
+    print ga.get_optimal_chromesome()
         #print rep
+
 
