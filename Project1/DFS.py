@@ -10,7 +10,7 @@ import time
 
 
 class DFS(object):
-    # 初始化迷宫大小和密度
+    # init this class
     def __init__(self):
         self.node_to_go = {}
         self.node_has_been = dict()
@@ -18,22 +18,26 @@ class DFS(object):
         self.min_distance = -1
         self.optimal_road = []
 
-    # DFS遍历
+    # run DFS
     def dfs_route(self, map, size):
-        # start point
+        # nodes stack
         self.node_to_go = {}
+        # nodes has been to before
         self.node_has_been = dict()
+        # mark this node in the stack
         node_stack_map = dict()
-        # self.node_has_been[(0, 0)] = 0
+        # init the map and size
         for i in range(0, size):
             for j in range(0, size):
                 self.node_has_been[(i, j)] = 0
                 node_stack_map[(i, j)] = 0
         self.size = size
         self.min_distance = size * size
+        # set start and end node
         start_node = (0, 0)
         end_node = (size - 1, size - 1)
         node_stack = [start_node]
+        # init the route trace back
         tracert = dict()
         tracert[(0, 0)] = [None]
         distance = dict()
@@ -99,28 +103,6 @@ class DFS(object):
                     tracert[target] = current_node
                     distance[target] = current_distance + 1
         return 0, None
-        # if self.min_distance < size * size:
-        #     list = []
-        #     current_node = end_node
-        #     while current_node != start_node:
-        #         list.append(current_node)
-        #         current_node = tracert[current_node]
-        #     list.append(start_node)
-        #     self.optimal_road = list
-        #     print "optimal_road",
-        #     print self.optimal_road
-        #     print "distance:",
-        #     print len(self.optimal_road)
-        #     result = copy.deepcopy(map)
-        #     for node in self.optimal_road:
-        #         result[node[0]][node[1]] = 2
-        #     for k in range(size):
-        #         for j in range(size):
-        #             if result[k][j] == 2:
-        #                 print "\033[1;35m2\033[0m",
-        #             else:
-        #                 print(result[k][j]),
-        #         print('\n'),
 
     def move_to_node(self, target, map, distance, size, node_stack):
         if 0 <= target[0] < size \
@@ -133,7 +115,7 @@ class DFS(object):
             return 0
 
     def reach_end(self, start_node, end_node, tracert, distance, current_node, map):
-        #if distance < self.min_distance:
+        # if a way has reach the end
         tracert[end_node] = current_node
         # print distance
         list = []
@@ -144,24 +126,9 @@ class DFS(object):
         list.append(start_node)
         self.optima_road = list
         return list
-            # return list
-            # result = copy.deepcopy(map)
-            # for node in list:
-            #     result[node[0]][node[1]] = 2
-            # for k in range(self.size):
-            #     for j in range(self.size):
-            #         if result[k][j] == 2:
-            #             print "\033[1;35m2\033[0m",
-            #         else:
-            #             print(result[k][j]),
-            #     print('\n'),
-            # print list
-            # print end_node
-            # if len(list) < self.min_distance:
-            # self.min_distance = distance  # len(list)
-            # self.optimal_road = list
-        return
+
     def print_optimal(self, map):
+        # print the result
         print "optimal_road",
         print self.optimal_road
         print "distance:",
@@ -186,7 +153,7 @@ if __name__ == "__main__":
         print "argument", i, sys.argv[i]
     print ('start initialize')
     # set the size and density of this matrix
-    size = 10
+    size = 100
     start = Start.Start(size, 0.3)
     # start.print_matrix()
     start.paint_random()

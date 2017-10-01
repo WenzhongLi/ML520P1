@@ -12,9 +12,9 @@ import copy
 import sys
 import Start
 
-
+# This script find the shortest path.
 class DFS(object):
-    # 初始化迷宫大小和密度
+    # init
     def __init__(self):
         self.node_to_go = {}
         self.node_has_been = dict()
@@ -22,7 +22,7 @@ class DFS(object):
         self.min_distance = -1
         self.optimal_road = []
 
-    # DFS遍历
+    # run DFS
     def dfs_route(self, map, size):
         # start point
         self.node_to_go = {}
@@ -152,19 +152,19 @@ if __name__ == "__main__":
         print "argument", i, sys.argv[i]
     print ('start initialize')
     # set the size and density of this matrix
-    size = 300
+    size = 500
     start = Start.Start(size, 0.3)
     start.print_matrix()
     start.paint_random()
     start.print_matrix()
     print ('start over')
     dfs = DFS()
-    m = [[0, 0, 0, 0, 1, 0],
+    m = [[0, 0, 1, 0, 1, 0],
          [0, 1, 0, 0, 1, 1],
-         [0, 0, 0, 1, 0, 1],
-         [1, 0, 0, 0, 1, 0],
+         [0, 0, 1, 0, 0, 0],
+         [0, 1, 0, 0, 1, 0],
          [0, 1, 0, 1, 0, 0],
-         [0, 0, 0, 0, 0, 0]]
+         [0, 0, 0, 0, 1, 0]]
     dfs.dfs_route(start.get_matrix(), size)
     # dfs.dfs_route(m, size)
     print ('end')

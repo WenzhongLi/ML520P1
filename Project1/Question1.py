@@ -22,7 +22,7 @@ if __name__ == "__main__":
     start = Start.Start(size, 0.3)
     # start.print_matrix()
     start.paint_random()
-    # start.print_matrix()
+    # init all the algorithm
     dfs = DFS.DFS()
     bfs = BFS.BFS()
     a_mht = ASTAR_MHT.ASTAR()
@@ -35,6 +35,7 @@ if __name__ == "__main__":
         start.paint_random()
         while dfs.dfs_route(start.get_matrix(), size)[0] == 0:
             start.paint_random()
+        # set timer for each algorithm
         start_time = time.clock()
         #DFS
         dfs.dfs_route(start.get_matrix(), size)
@@ -55,7 +56,9 @@ if __name__ == "__main__":
         a_euc.find_path(start.get_matrix(), size)
         T_EUC = (time.clock() - start_time)
         print T_DFS, T_BFS, T_MHT, T_EUC
+        # print the result and if one algorithm exceed 60s end the test
         if T_DFS > 60 or T_BFS > 60 or T_MHT > 60 or T_EUC > 60:
             break
+        # every turn size = size * 110%
         size = int(size * 1.1)
     print "end"
