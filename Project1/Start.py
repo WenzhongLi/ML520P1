@@ -1,13 +1,16 @@
-# -*- coding:utf-8 -*-
-#
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+'''
+@author: li
+'''
 
 import random
 import sys
 
 
 class Start(object):
-    # 初始化迷宫大小和密度
-    def __init__(self,size,density):
+    # init size and density of maze
+    def __init__(self, size, density):
         self.size = size
         self.density = density
         self.map_matrix = []
@@ -15,8 +18,8 @@ class Start(object):
             self.map_matrix.append([])
             for j in range(size):
                 self.map_matrix[i].append(0)
-    # 输出当前迷宫到控制台
 
+    # print maze to commend line
     def print_matrix(self):
         count_blocked = 0
         for i in range(self.size):
@@ -26,11 +29,12 @@ class Start(object):
                     count_blocked+=1
             print('\n'),
         print(str(count_blocked)+" are blocked\n")
-    # 随机绘制迷宫
 
+    # paint maze randomly
     def paint_random(self):
         matrix = [[0 for j in range(self.size)] for k in range(self.size)]
         list = []
+        # init a set of all point could be block
         for i in range(self.size):
             for j in range(self.size):
                 list.append((i, j))
@@ -39,7 +43,9 @@ class Start(object):
         dot_num = int(self.size * self.size * self.density)
         if dot_num > self.size * self.size - 2:
             dot_num = self.size * self.size - 2
+        # get some point randomly
         slice = random.sample(list, dot_num)
+        # Paint them 1
         for node in slice:
             matrix[node[0]][node[1]] = 1
         self.map_matrix = matrix
@@ -71,7 +77,6 @@ class Start(object):
         #     i+=1
         #     finish_flag = 0
         # random.uniform(10, 20)
-    # 返回迷宫矩阵
 
     def get_matrix(self):
         return self.map_matrix
