@@ -83,7 +83,7 @@ if __name__ == "__main__":
         print "argment", i, sys.argv[i]
     print ('start initialize')
     # set the size and density of this matrix
-    start = Start(100, 0.3)
+    start = Start(10, 0.3)
     start.print_matrix()
     start.paint_random()
     start.print_matrix()

@@ -3,15 +3,17 @@
 '''
 @author: Juntao Tan
 '''
-import math
 import random
-import operator
-import Start
-import DFS
 import copy
+import json
+import Project1.Start
+import Project1.DFS
+import Project1.BFS
+import Project1.ASTAR_MHT
+
 
 class GA():
-    def __init__(self, size, count, mu_rate):
+    def __init__(self, size, count,mu_rate):
         self.mu_rate = mu_rate
         # length of per chromosome
         self.size = size
@@ -24,7 +26,7 @@ class GA():
 
     def gen_chromosome(self, size):
         #randomly generate a maze
-        maze = Start.Start(size, 0.3)
+        maze = Project1.Start.Start(size, 0.3)
         maze.paint_random()
         chromosome = maze.get_matrix() # chromosome is a size x size random matrix
         return chromosome
@@ -46,8 +48,8 @@ class GA():
 
 
     def fitness(self, chromsome):
-        dfs = DFS.DFS()
-        res = dfs.dfs_route(chromsome, self.size)
+        astar = Project1.ASTAR_MHT.ASTAR()
+        res = astar.find_path(chromsome, self.size)
         if res[0] == 1:
             return res[2]
         else:
@@ -55,7 +57,7 @@ class GA():
 
 
     def evolve(self):
-        parents = copy.deepcopy(self.selection())
+        parents = copy.deepcopy(self.selection)
         children = copy.deepcopy(self.crossover(parents))
         self.generation = copy.deepcopy(children)
         #self.mutation(self.mu_rate)
@@ -64,6 +66,7 @@ class GA():
 
 
 
+    @property
     def selection(self):
         # del the mazes with no solution
         #good_generation = []
@@ -174,11 +177,14 @@ class GA():
                 children.append(random_P[n])
         return children
 
-
-    def sort(self, generation):
-        sorted_generation = []
-
-
+    def get_optimal_chromesome(self):
+        best_chromosome_num = 0  # the best chromosome in the current generation
+        best_fit = 0
+        for i in range(0, len(self.generation)):
+            if self.fitness(self.generation[i]) > best_fit:
+                best_fit = self.fitness(self.generation[i])
+                best_chromosome_num = i
+        return self.generation[best_chromosome_num]
 
 
 
@@ -191,33 +197,12 @@ class GA():
             if self.fitness(self.generation[i]) > best_fit:
                 best_fit = self.fitness(self.generation[i])
                 best_chromosome_num = i
-        dfs = DFS.DFS()
-        res = copy.deepcopy(dfs.dfs_route(self.generation[best_chromosome_num],self.size))
-        print res
-        '''
-        res = [0] * 5   #reserve result
+        astar = Project1.ASTAR_MHT.ASTAR()
+        res = copy.deepcopy(astar.find_path(self.generation[best_chromosome_num], self.size))
 
-        best_chromosome_num = 0    #the best chromosome in the current generation
-        best_fit = 0
-        for i in range(0, len(self.generation)):
-            if self.fitness(self.generation[i]) > best_fit:
-                best_fit = self.fitness(self.generation[i])
-                best_chromosome_num = i
-        dfs = DFS.DFS()
-        dfs_rout = copy.deepcopy(dfs.dfs_route(self.generation[best_chromosome_num],self.size))
 
-        res[0] = copy.copy(dfs_rout[0])        # does the maze has solution
-        res[1] = copy.deepcopy(dfs.optimal_road)   # solution road list
-        res[2] = copy.copy(dfs_rout[1])        # distance
-        res[3] = copy.copy(dfs_rout[2])        # solve count
-        res[4] = copy.copy(dfs_rout[3])        # block
-        print 'has solution? ', res[0]
-        print 'road', res[1]
-        print 'distance: ',res[2]
-        print 'count: ', res[3]
-        print 'fringe: ', res[4]
         return self.generation[best_chromosome_num]
-        '''
+
 
 
 
@@ -260,7 +245,7 @@ class GA():
 
 
 if __name__ == "__main__":
-    ga = GA(100, 30, 0.3)
+    ga = GA(10, 30, 0.3)
     last_result = ga.result()
     rep = 0
     for i in range(100000000):
@@ -274,4 +259,15 @@ if __name__ == "__main__":
             break
         last_result = result
         #print rep
+    print ga.get_optimal_chromesome()
+
+    f1 = open('GA_OPTIMAL_MAZE/GA_ASTAR_MHT_LENGTH.js', 'w')
+    map = copy.copy(ga.get_optimal_chromesome())
+    data = dict()
+    original = {"size": len(map), "map": map}
+    data["original"] = original
+    json = json.dumps(data)
+    f1.write("var json_data = " + json + ";")
+    f1.flush()
+    f1.close()
 

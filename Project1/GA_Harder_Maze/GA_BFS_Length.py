@@ -3,13 +3,12 @@
 '''
 @author: Juntao Tan
 '''
-import math
+import Project1.Start
+import Project1.BFS
 import random
-import operator
-import Start
-import DFS
+import json
 import copy
-import BFS
+
 
 class GA():
     def __init__(self, size, count,mu_rate):
@@ -21,20 +20,16 @@ class GA():
         # randomly create generation
         self.generation = self.gen_generation(size,count)
 
-
-
     def gen_chromosome(self, size):
         #randomly generate a maze
-        maze = Start.Start(size, 0.3)
+        maze = Project1.Start.Start(size, 0.3)
         maze.paint_random()
         chromosome = maze.get_matrix() # chromosome is a size x size random matrix
         return chromosome
 
-
     def gen_generation(self, size, count):
         # generate the first generation
         #return [self.gen_chromosome(size) for i in range(count)]
-
         generation = []
         i = 0
         while i < count:
@@ -45,25 +40,18 @@ class GA():
                 i += 1
         return generation
 
-
     def fitness(self, chromsome):
-        bfs = BFS.BFS()
+        bfs = Project1.BFS.BFS()
         res = bfs.bfs_init(chromsome, self.size)
         if res[0] == 1:
             return res[2]
         else:
             return res[0]
 
-
     def evolve(self):
         parents = copy.deepcopy(self.selection)
         children = copy.deepcopy(self.crossover(parents))
         self.generation = copy.deepcopy(children)
-        #self.mutation(self.mu_rate)
-
- #       self.mutation()
-
-
 
     @property
     def selection(self):
@@ -74,7 +62,6 @@ class GA():
         #        good_generation.append(i)
         # count total fitness
         parents = []
-
         sumfit = 0
         for i in self.generation:
             sumfit = sumfit + self.fitness(i)
@@ -177,14 +164,18 @@ class GA():
         return children
 
 
-    def sort(self, generation):
-        sorted_generation = []
+    def get_optimal_chromesome(self):
+        best_chromosome_num = 0  # the best chromosome in the current generation
+        best_fit = 0
+        for i in range(0, len(self.generation)):
+            if self.fitness(self.generation[i]) > best_fit:
+                best_fit = self.fitness(self.generation[i])
+                best_chromosome_num = i
+        return self.generation[best_chromosome_num]
 
 
 
-
-
-    def result(self):                                      #======================================
+    def result(self):
         res = [0] * 5   #reserve result
 
         best_chromosome_num = 0    #the best chromosome in the current generation
@@ -193,29 +184,9 @@ class GA():
             if self.fitness(self.generation[i]) > best_fit:
                 best_fit = self.fitness(self.generation[i])
                 best_chromosome_num = i
-        bfs = BFS.BFS()
+        bfs = Project1.BFS.BFS()
         res = copy.deepcopy(bfs.bfs_init(self.generation[best_chromosome_num],self.size))
-        print res
-
-        '''
-        dfs_rout = copy.deepcopy(dfs.dfs_route(self.generation[best_chromosome_num],self.size))
-
-        res[0] = copy.copy(dfs_rout[0])        # does the maze has solution
-        res[1] = copy.deepcopy(dfs.optimal_road)   # solution road list
-        res[2] = copy.copy(dfs_rout[1])        # distance
-        res[3] = copy.copy(dfs_rout[2])        # solve count
-        res[4] = copy.copy(dfs_rout[3])        # block
-        print 'has solution? ', res[0]
-        print 'road', res[1]
-        print 'distance: ',res[2]
-        print 'count: ', res[3]
-        print 'fringe: ', res[4]
-        '''
         return self.generation[best_chromosome_num]
-
-
-
-
 
 
 
@@ -231,10 +202,6 @@ class GA():
         #fit = []
         #for i in self.generation:
         #    fit.append(self.fitness(i))
-
-
-
-
 
 
 
@@ -268,5 +235,23 @@ if __name__ == "__main__":
         if rep > 20:
             break
         last_result = result
+    print ga.get_optimal_chromesome()
         #print rep
+    '''
+    f1 = open('GA_BFS_Length', 'w')
+    data = copy.copy(ga.get_optimal_chromesome())
+    json = json.dumps(data)
+    f1.write("GA_BFS_Optimal_Length = " + json + ";")
+    f1.flush()
+    f1.close()
+    '''
 
+    f1 = open('GA_OPTIMAL_MAZE/GA_BFS_LENGTH.js', 'w')
+    map = copy.copy(ga.get_optimal_chromesome())
+    data = dict()
+    original = {"size": len(map), "map": map}
+    data["original"] = original
+    json = json.dumps(data)
+    f1.write("var json_data = " + json + ";")
+    f1.flush()
+    f1.close()
