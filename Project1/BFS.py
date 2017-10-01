@@ -93,9 +93,11 @@ if __name__ == "__main__":
     for i in range(1, len(sys.argv)):
         print "argument", i, sys.argv[i]
     # set the size and density of this matrix
-    size = 100
-    start = Start.Start(size, 0.0)
+    size = 3
+    start = Start.Start(size, 0.3)
+    start.print_matrix()
     start.paint_random()
+    start.print_matrix()
     bfs = BFS()
     print bfs.bfs_init(start.get_matrix(), size)
     '''
