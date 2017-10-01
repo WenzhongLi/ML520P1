@@ -9,6 +9,7 @@ import operator
 import Start
 import DFS
 import copy
+import BFS
 
 class GA():
     def __init__(self, size, count,mu_rate):
@@ -46,8 +47,8 @@ class GA():
 
 
     def fitness(self, chromsome):
-        dfs = DFS.DFS()
-        res = dfs.dfs_route(chromsome, self.size)
+        bfs = BFS.BFS()
+        res = bfs.bfs_init(chromsome, self.size)
         if res[0] == 1:
             return res[2]
         else:
@@ -55,7 +56,7 @@ class GA():
 
 
     def evolve(self):
-        parents = copy.deepcopy(self.selection())
+        parents = copy.deepcopy(self.selection)
         children = copy.deepcopy(self.crossover(parents))
         self.generation = copy.deepcopy(children)
         #self.mutation(self.mu_rate)
@@ -64,6 +65,7 @@ class GA():
 
 
 
+    @property
     def selection(self):
         # del the mazes with no solution
         #good_generation = []
@@ -182,7 +184,7 @@ class GA():
 
 
 
-    def result(self):
+    def result(self):                                      #======================================
         res = [0] * 5   #reserve result
 
         best_chromosome_num = 0    #the best chromosome in the current generation
@@ -191,19 +193,11 @@ class GA():
             if self.fitness(self.generation[i]) > best_fit:
                 best_fit = self.fitness(self.generation[i])
                 best_chromosome_num = i
-        dfs = DFS.DFS()
-        res = copy.deepcopy(dfs.dfs_route(self.generation[best_chromosome_num],self.size))
+        bfs = BFS.BFS()
+        res = copy.deepcopy(bfs.bfs_init(self.generation[best_chromosome_num],self.size))
         print res
-        '''
-        res = [0] * 5   #reserve result
 
-        best_chromosome_num = 0    #the best chromosome in the current generation
-        best_fit = 0
-        for i in range(0, len(self.generation)):
-            if self.fitness(self.generation[i]) > best_fit:
-                best_fit = self.fitness(self.generation[i])
-                best_chromosome_num = i
-        dfs = DFS.DFS()
+        '''
         dfs_rout = copy.deepcopy(dfs.dfs_route(self.generation[best_chromosome_num],self.size))
 
         res[0] = copy.copy(dfs_rout[0])        # does the maze has solution
@@ -216,8 +210,9 @@ class GA():
         print 'distance: ',res[2]
         print 'count: ', res[3]
         print 'fringe: ', res[4]
-        return self.generation[best_chromosome_num]
         '''
+        return self.generation[best_chromosome_num]
+
 
 
 
