@@ -1,5 +1,6 @@
-# INTRO TO ARTIF INTEL PROJECT1
-    maze game
+INTRO TO ARTIF INTEL 520
+# PROJECT1 MAZE GAME
+by Wenzhong Li  |  Heng-Shao Chen  | Juntao Tan  |  Yingqiang Ge
 ## Algorithm
 ### DFS
 Include two Python file, DFS.py and DFS_optimal.
@@ -17,6 +18,9 @@ ASTAR_MHT.py is an implement of A* using Manhattan Distance.
 A genetic algorithm (GA) is a meta-heuristic inspired by the process of natural selection that belongs to the larger class of evolutionary algorithms (EA).
 Genetic algorithms are commonly used to generate high-quality solutions to optimization and search problems by relying on bio-inspired operators such as mutation, crossover and selection.
 See Genetic Script chapter for more GA Script detail.
+## Maze Generator
+### Start
+Start.py provide random algorithm to build a random maze with set p and size.
 ## Statistics Script
 ### Question 1
 Question1.py run all 4 Algorithm on the same solvable maze.
