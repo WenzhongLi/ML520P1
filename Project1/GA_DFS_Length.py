@@ -9,6 +9,7 @@ import operator
 import Start
 import DFS
 import copy
+import json
 
 class GA():
     def __init__(self, size, count, mu_rate):
@@ -233,5 +234,11 @@ if __name__ == "__main__":
         last_result = result
     print ga.get_optimal_chromesome()
         #print rep
+    f1 = open('GA_DFS_Length', 'w')
+    data = copy.copy(ga.get_optimal_chromesome())
+    json = json.dumps(data)
+    f1.write("GA_DFS_Optimal_Length = " + json + ";")
+    f1.flush()
+    f1.close()
 
 
