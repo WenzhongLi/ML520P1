@@ -48,7 +48,7 @@ class GA():
 
 
     def fitness(self, chromsome):
-        astar = ASTAR_EUC.ASTAR()
+        astar = ASTAR_MHT.ASTAR()
         res = astar.find_path(chromsome, self.size)
         if res[0] == 1:
             return res[2]
@@ -194,7 +194,7 @@ class GA():
             if self.fitness(self.generation[i]) > best_fit:
                 best_fit = self.fitness(self.generation[i])
                 best_chromosome_num = i
-        astar = ASTAR_EUC.ASTAR()
+        astar = ASTAR_MHT.ASTAR()
         res = copy.deepcopy(astar.find_path(self.generation[best_chromosome_num], self.size))
         print res
 
