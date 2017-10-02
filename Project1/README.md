@@ -73,5 +73,20 @@ Contain data in JSON form. Import to HTML file as a "*.js" file.
 Data include the original map and the solution provided by all 4 algorithm.
 ## Genetic Script
 ### GA DFS
+Contain three files GA_DFS_FRINGE.py, GA_DFS_Length.py and GA_DFS_NODES.py.
+GA_DFS_FRINGE.py generates maze has the longest solution path returned.
+GA_DFS_FRINGE.py generates maze has the biggest total number of nodes expanded.
+GA_DFS_NODES.py generates maze has the maximum size of fringe during runtime.
 ### GA BFS
+Contain three files GA_BFS_FRINGE.py, GA_BFS_Length.py and GA_BFS_NODES.py.
+GA_BFS_FRINGE.py generates maze has the longest solution path returned.
+GA_BFS_FRINGE.py generates maze has the biggest total number of nodes expanded.
+GA_BFS_NODES.py generates maze has the maximum size of fringe during runtime.
 ### GA A*
+Contain six files GA_ASTAR_MHT_FRINGE.py, GA_ASTAR_MHT_LENGTH.py, GA_ASTAR_MHT_NODES.py, GA_ASTAR_EUC_FRINGE.py, GA_ASTAR_EUC_LENGTH.py and GA_ASTAR_EUC_NODES.py.
+GA_ASTAR_MHT_LENGTH.py generates maze has the longest solution path returned.
+GA_ASTAR_MHT_NODES.py generates maze has the biggest total number of nodes expanded.
+GA_ASTAR_MHT_FRINGE.py generates maze has the maximum size of fringe during runtime.
+GA_ASTAR_EUC_LENGTH.py generates maze has the longest solution path returned.
+GA_ASTAR_EUC_NODES.py generates maze has the biggest total number of nodes expanded.
+GA_ASTAR_EUC_FRINGE.py generates maze has the maximum size of fringe during runtime.
