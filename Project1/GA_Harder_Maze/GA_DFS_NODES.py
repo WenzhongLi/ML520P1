@@ -189,7 +189,7 @@ class GA():
         dfs = Project1.DFS.DFS()
         res = copy.deepcopy(dfs.dfs_route(self.generation[best_chromosome_num],self.size))
         print res
-        return res
+        return res[3]
 
 
     def get_optimal_chromesome(self):

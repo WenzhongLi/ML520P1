@@ -187,7 +187,7 @@ class GA():
         bfs = Project1.BFS.BFS()
         res = copy.deepcopy(bfs.bfs_init(self.generation[best_chromosome_num],self.size))
         print res
-        return res
+        return res[2]
 
 
 

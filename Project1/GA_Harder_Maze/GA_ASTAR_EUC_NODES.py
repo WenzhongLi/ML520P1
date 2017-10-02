@@ -200,7 +200,7 @@ class GA():
         astar = Project1.ASTAR_EUC.ASTAR()
         res = copy.deepcopy(astar.find_path(self.generation[best_chromosome_num], self.size))
         print res
-        return res
+        return res[3]
 
 
 

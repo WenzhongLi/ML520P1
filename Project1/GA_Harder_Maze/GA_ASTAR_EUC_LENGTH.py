@@ -202,7 +202,7 @@ class GA():
         print res
 
 
-        return res
+        return res[2]
 
 
 
