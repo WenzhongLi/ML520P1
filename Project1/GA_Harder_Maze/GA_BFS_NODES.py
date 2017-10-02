@@ -136,7 +136,7 @@ class GA():
                     #    fit_children.append(self.fitness(c))
                     #print fit_children
 
-                if self.fitness(reserve_parents2) > self.fitness(step_P[i+1]) != 0:
+                if self.fitness(reserve_parents2) > self.fitness(step_P[i+1]):
                     children.append(copy.deepcopy(reserve_parents2))
                 else:
                     children.append(copy.deepcopy(step_P[i+1]))
