@@ -146,7 +146,7 @@ if __name__ == "__main__":
     for i in range(1, len(sys.argv)):
         print "argument", i, sys.argv[i]
     # set the size and density of this matrix
-    size = 100
+    size = 3000
     start = Start.Start(size, 0.2)
     # start.print_matrix()
     start.paint_random()

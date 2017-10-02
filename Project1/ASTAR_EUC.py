@@ -103,7 +103,7 @@ class ASTAR:
 
 
     def get_dist(self, i):
-        euc = math.sqrt((self.e_x - i[0]) * (self.e_x - i[0]) + (self.e_y - i[1]) * (self.e_y - i[1]))
+        euc = (self.e_x - i[0]) * (self.e_x - i[0]) + (self.e_y - i[1]) * (self.e_y - i[1])
         return self.open.get(i).distance + euc, euc
 
     # discover the node's surrounding environment
