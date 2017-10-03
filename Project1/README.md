@@ -18,6 +18,14 @@ ASTAR_MHT.py is an implement of A* using Manhattan Distance.
 A genetic algorithm (GA) is a meta-heuristic inspired by the process of natural selection that belongs to the larger class of evolutionary algorithms (EA).
 Genetic algorithms are commonly used to generate high-quality solutions to optimization and search problems by relying on bio-inspired operators such as mutation, crossover and selection.
 See Genetic Script chapter for more GA Script detail.
+### Simulated Annealing
+SA is a general-purpose, serial algorithm for finding a global minimum for a
+continuous function. It is also a popular Monte Carlo algorithm for any optimization
+problem including COPs. The solutions by this technique are close to the global
+minimum within a polynomial upper bound for the computational time and are
+independent of the initial conditions. Some parallel algorithms for SA have been
+proposed aiming to improve the accuracy of the solutions by applying parallelism
+SimAnealing.py is an implement of Simulated Annealing.
 ## Maze Generator
 ### Start
 Start.py provide random algorithm to build a random maze with set p and size.
