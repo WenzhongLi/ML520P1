@@ -24,7 +24,6 @@ class SA:
         new_map = [([0]*self.size) for i in  range(self.size)]
         while T > 1:
             old_cost = self.cost_cal(self.init_map)
-
             for i in range(0, self.size):
                 for j in range(0, self.size):
                     new_map[i][j] = self.init_map[i][j]
@@ -47,9 +46,8 @@ class SA:
             if dE >= 0 or (dE < 0 and math.exp(dE/T) > random.random):
                 self.init_map = new_map
 
-
             T = T * cool
-        return init_map
+        return self.init_map
 
     # discover the node's surrounding environment
     def extend_surround(self, q, matrix):
@@ -86,7 +84,7 @@ class SA:
         res = astar.find_path(map, len(map))
         #  return 1, self.path, p.distance, traversal_node_count, fridge
         if res[0] == 1:
-            cur_cost = res[0] * res[3]
+            cur_cost = res[0] * res[2]
         else:
             cur_cost = 0
         return cur_cost
@@ -97,17 +95,22 @@ if __name__ == "__main__":
         print "argument", i, sys.argv[i]
     # set the size and density of this matrix
     size = 10
-    start = Start.Start(size, 0.2)
+    start = Start.Start(size, 0.35)
     # start.print_matrix()
     best = -1
-    for i in range(20):
+    best_res = ()
+    hard_map = ()
+    for i in range(100):
         start.paint_random()
         #start.print_matrix()
         sa = SA()
-        map = sa.sa_init(start.get_matrix(),size, 100, 0.98)
+        res_map = sa.sa_init(start.get_matrix(),size, 100, 0.02)
         astar = ASTAR_MHT.ASTAR()
-        res = astar.find_path(map, len(map))
+        res = astar.find_path(res_map, len(res_map))
         if res[0] != 0:
             if best < res[3]:
                 best = res[3]
-    print best
+                best_res = res
+                hard_map = res_map
+    print best_res
+    print res_map
